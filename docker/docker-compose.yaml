@@ -1,0 +1,48 @@
+services:
+  ros2:
+    build:
+      context: .
+      dockerfile: Dockerfile.raspberry
+      args:
+        USER_ID: 1000
+        GROUP_ID: 1000
+    image: robot-ros2:humble
+    container_name: robot_ros2_dev
+    hostname: robot-ros2
+    privileged: true
+    network_mode: host
+    stdin_open: true
+    tty: true
+    
+    volumes:
+      # Votre workspace existant
+      - /home/elyssa/robot_ws:/workspace
+      
+      # Accès aux périphériques
+      - /dev:/dev
+      - /sys:/sys
+      
+      # Accès caméra et GPIO
+      - /run/udev:/run/udev:ro
+      
+      # X11 pour GUI (RViz, etc.)
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      
+      # Cache pour accélérer les builds
+      - ros2-cache:/home/rosuser/.cache
+      
+    environment:
+      - DISPLAY=:0
+      - QT_X11_NO_MITSHM=1
+      - ROS_DOMAIN_ID=42
+      - ROS_LOCALHOST_ONLY=0
+      - PYTHONUNBUFFERED=1
+      
+    devices:
+      - /dev/video0:/dev/video0        # Caméra
+      - /dev/gpiomem:/dev/gpiomem      # GPIO Raspberry Pi
+      
+    command: /bin/bash
+
+volumes:
+  ros2-cache:

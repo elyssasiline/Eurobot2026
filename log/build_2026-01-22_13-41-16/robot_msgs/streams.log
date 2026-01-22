@@ -1,0 +1,2 @@
+[0.010s] Invoking command in '/workspace/build/robot_msgs': /usr/bin/cmake --build /workspace/build/robot_msgs -- -j4 -l4
+[0.043s] Invoked command in '/workspace/build/robot_msgs' returned '0': /usr/bin/cmake --build /workspace/build/robot_msgs -- -j4 -l4
