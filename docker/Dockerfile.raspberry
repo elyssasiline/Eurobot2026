@@ -1,110 +1,133 @@
-# Dockerfile pour ROS2 Humble sur Raspberry Pi avec support caméra v4l2
-FROM osrf/ros:humble-desktop
+FROM arm64v8/ros:humble
 
+SHELL ["/bin/bash", "-c"]
+
+# Éviter les prompts interactifs
 ENV DEBIAN_FRONTEND=noninteractive
 ENV ROS_DISTRO=humble
 ENV LANG=en_US.UTF-8
 ENV LC_ALL=en_US.UTF-8
 
+WORKDIR /app
+
 # Installation des dépendances de base
-RUN apt-get clean && \
-    rm -rf /var/lib/apt/lists/* && \
-    apt-get update --fix-missing && \
-    apt-get install -y --no-install-recommends \
+RUN apt-get update && apt-get install -y \
     locales \
-    curl \
-    gnupg2 \
-    lsb-release \
     && locale-gen en_US.UTF-8 \
-    && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Note: Python 3.10 est déjà inclus dans l'image osrf/ros:humble-desktop
-# On utilise directement python3 et pip3 disponibles
+# Install Dependencies for libcamera
+RUN apt-get update && apt-get install -y \
+    git \
+    python3-pip \
+    python3-jinja2 \
+    libboost-dev \
+    libgnutls28-dev \
+    openssl \
+    libtiff-dev \
+    pybind11-dev \
+    cmake \
+    python3-yaml \
+    python3-ply \
+    libglib2.0-dev \
+    libgstreamer-plugins-base1.0-dev \
+    ninja-build \
+    && rm -rf /var/lib/apt/lists/*
 
-# Packages ROS2 pour vision
-RUN apt-get update --fix-missing && \
-    apt-get install -y --no-install-recommends \
+# Install newer meson via pip (libcamera needs >= 1.0.1)
+RUN pip3 install --upgrade meson
+
+# Clone and build raspberrypi's libcamera fork
+RUN git clone https://github.com/raspberrypi/libcamera.git /tmp/libcamera \
+    && cd /tmp/libcamera \
+    && meson setup build --buildtype=release \
+       -Dpipelines=rpi/vc4,rpi/pisp \
+       -Dipas=rpi/vc4,rpi/pisp \
+       -Dv4l2=true \
+       -Dgstreamer=enabled \
+       -Dtest=false \
+       -Dlc-compliance=disabled \
+       -Dcam=disabled \
+       -Dqcam=disabled \
+       -Ddocumentation=disabled \
+       -Dpycamera=enabled \
+    && ninja -C build install \
+    && rm -rf /tmp/libcamera
+
+# Installation ROS2 Humble packages vision
+RUN apt-get update && apt-get install -y \
     ros-humble-cv-bridge \
     ros-humble-image-transport \
     ros-humble-camera-calibration \
     ros-humble-camera-info-manager \
     ros-humble-vision-msgs \
     ros-humble-image-tools \
-    ros-humble-usb-cam \
-    ros-humble-v4l2-camera \
-    ros-humble-xacro \
-    ros-humble-joint-state-publisher \
-    ros-humble-robot-state-publisher \
-    && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
 # Outils de développement
-RUN apt-get update --fix-missing && \
-    apt-get install -y --no-install-recommends \
+RUN apt-get update && apt-get install -y \
     python3-colcon-common-extensions \
     python3-rosdep \
     python3-vcstool \
     build-essential \
-    git \
     vim \
     nano \
     wget \
     tmux \
     htop \
-    sudo \
-    && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Outils v4l2 et support caméra
-RUN apt-get update --fix-missing && \
-    apt-get install -y --no-install-recommends \
-    v4l-utils \
-    libv4l-dev \
-    libv4l2rds0 \
-    uvcdynctrl \
-    && apt-get clean \
+# Dépendances pour vision par ordinateur
+RUN apt-get update && apt-get install -y \
+    python3-opencv \
+    python3-numpy \
     && rm -rf /var/lib/apt/lists/*
 
-# Dépendances Python pour vision
-RUN pip3 install --no-cache-dir \
-    numpy \
-    opencv-contrib-python \
-    Pillow
+# Clone and build the camera_ros node
+RUN mkdir -p /app/src \
+    && cd /app/src \
+    && git clone https://github.com/christianrauch/camera_ros.git \
+    && source /opt/ros/$ROS_DISTRO/setup.bash \
+    && cd /app \
+    && colcon build --event-handlers=console_direct+
 
-# Initialiser rosdep
-RUN rosdep init || true
-RUN rosdep update
-
-# Créer utilisateur non-root
+# Créer un utilisateur non-root
 ARG USER_ID=1000
 ARG GROUP_ID=1000
 RUN groupadd -g ${GROUP_ID} rosuser || true
 RUN useradd -m -u ${USER_ID} -g ${GROUP_ID} -s /bin/bash rosuser
 RUN usermod -aG dialout rosuser
 RUN usermod -aG video rosuser
-RUN usermod -aG gpio rosuser || true
+
+# Donner les permissions sudo
+RUN apt-get update && apt-get install -y sudo \
+    && rm -rf /var/lib/apt/lists/*
 RUN echo "rosuser ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
-# Configuration bashrc
-RUN echo "source /opt/ros/humble/setup.bash" >> /home/rosuser/.bashrc && \
-    echo "if [ -f /workspace/install/setup.bash ]; then" >> /home/rosuser/.bashrc && \
-    echo "  source /workspace/install/setup.bash" >> /home/rosuser/.bashrc && \
-    echo "fi" >> /home/rosuser/.bashrc
-
-# Aliases utiles
-RUN echo "alias cb='cd /workspace && colcon build --symlink-install'" >> /home/rosuser/.bashrc && \
-    echo "alias cbs='cd /workspace && colcon build --symlink-install --packages-select'" >> /home/rosuser/.bashrc && \
-    echo "alias ct='cd /workspace && colcon test'" >> /home/rosuser/.bashrc && \
-    echo "alias ws='cd /workspace'" >> /home/rosuser/.bashrc && \
-    echo "alias src='cd /workspace/src'" >> /home/rosuser/.bashrc && \
-    echo "alias ss='source /workspace/install/setup.bash'" >> /home/rosuser/.bashrc && \
-    echo "alias cam='v4l2-ctl --list-devices'" >> /home/rosuser/.bashrc
-
+# Créer le workspace utilisateur
 RUN mkdir -p /workspace
-RUN chown -R rosuser:rosuser /workspace
+RUN chown -R rosuser:rosuser /workspace /app
+
+# Configuration bashrc
+RUN echo "source /opt/ros/humble/setup.bash" >> /home/rosuser/.bashrc
+RUN echo "source /app/install/setup.bash" >> /home/rosuser/.bashrc
+RUN echo "if [ -f /workspace/install/setup.bash ]; then" >> /home/rosuser/.bashrc
+RUN echo "  source /workspace/install/setup.bash" >> /home/rosuser/.bashrc
+RUN echo "fi" >> /home/rosuser/.bashrc
+
+# Alias utiles
+RUN echo "alias cb='cd /workspace && colcon build --symlink-install'" >> /home/rosuser/.bashrc
+RUN echo "alias cbs='cd /workspace && colcon build --symlink-install --packages-select'" >> /home/rosuser/.bashrc
+RUN echo "alias ws='cd /workspace'" >> /home/rosuser/.bashrc
+RUN echo "alias src='cd /workspace/src'" >> /home/rosuser/.bashrc
+RUN echo "alias ss='source /workspace/install/setup.bash'" >> /home/rosuser/.bashrc
+
+COPY entrypoint.sh /app/
+RUN chmod +x /app/entrypoint.sh
 
 WORKDIR /workspace
+
 USER rosuser
 
+ENTRYPOINT ["/app/entrypoint.sh"]
 CMD ["/bin/bash"]

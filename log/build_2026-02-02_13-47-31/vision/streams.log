@@ -1,0 +1,18 @@
+[0.632s] Invoking command in '/workspace/build/vision': PYTHONPATH=/workspace/build/vision/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/workspace/install/vision/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /workspace/build/vision/build --no-deps symlink_data
+[0.866s] running develop
+[0.964s] running egg_info
+[0.964s] writing vision.egg-info/PKG-INFO
+[0.965s] writing dependency_links to vision.egg-info/dependency_links.txt
+[0.965s] writing entry points to vision.egg-info/entry_points.txt
+[0.965s] writing requirements to vision.egg-info/requires.txt
+[0.965s] writing top-level names to vision.egg-info/top_level.txt
+[0.967s] reading manifest file 'vision.egg-info/SOURCES.txt'
+[0.968s] writing manifest file 'vision.egg-info/SOURCES.txt'
+[0.970s] running build_ext
+[0.970s] Creating /workspace/install/vision/lib/python3.10/site-packages/vision.egg-link (link to .)
+[0.971s] Installing aruco_detector_node script to /workspace/install/vision/bin
+[0.971s] 
+[0.971s] Installed /workspace/build/vision
+[0.972s] running symlink_data
+[0.972s] error: can't copy '/workspace/build/vision/launch/aruco_detection.launch.py': doesn't exist or not a regular file
+[1.026s] Invoked command in '/workspace/build/vision' returned '1': PYTHONPATH=/workspace/build/vision/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/workspace/install/vision/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /workspace/build/vision/build --no-deps symlink_data

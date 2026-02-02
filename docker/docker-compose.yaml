@@ -6,7 +6,7 @@ services:
       args:
         USER_ID: 1000
         GROUP_ID: 1000
-    image: robot-ros2:humble-rpi
+    image: robot-ros2:humble-rpi-libcamera
     container_name: robot_ros2_dev
     hostname: robot-ros2
     privileged: true
@@ -23,18 +23,11 @@ services:
       - /sys:/sys
       - /run/udev:/run/udev:ro
       
-      # Display X11
+      # Display X11 (optionnel)
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
       
       # Cache ROS2
       - ros2-cache:/home/rosuser/.cache
-      
-      # Bibliothèques Python de l'hôte (READ-ONLY)
-      - /usr/lib/python3/dist-packages:/usr/lib/python3/dist-packages:ro
-      
-      # Bibliothèques système ARM64
-      - /usr/lib/aarch64-linux-gnu:/host/usr/lib/aarch64-linux-gnu:ro
-      - /lib/aarch64-linux-gnu:/host/lib/aarch64-linux-gnu:ro
       
     environment:
       # Display
@@ -46,31 +39,23 @@ services:
       - ROS_LOCALHOST_ONLY=0
       - PYTHONUNBUFFERED=1
       
-      # Chemins des bibliothèques
-      - LD_LIBRARY_PATH=/host/usr/lib/aarch64-linux-gnu:/host/lib/aarch64-linux-gnu:${LD_LIBRARY_PATH}
-      - PYTHONPATH=/usr/lib/python3/dist-packages:${PYTHONPATH}
+      # Libcamera
+      - LD_LIBRARY_PATH=/usr/local/lib/aarch64-linux-gnu:/usr/local/lib
       
     devices:
-      # Devices vidéo (v4l2)
+      # Tous les devices vidéo
       - /dev/video0:/dev/video0
       - /dev/video1:/dev/video1
       - /dev/video2:/dev/video2
       - /dev/video3:/dev/video3
-      - /dev/video4:/dev/video4
-      - /dev/video5:/dev/video5
-      - /dev/video6:/dev/video6
-      - /dev/video7:/dev/video7
       
-      # Devices média
+      # Devices média pour libcamera
       - /dev/media0:/dev/media0
       - /dev/media1:/dev/media1
       - /dev/media2:/dev/media2
-      - /dev/media3:/dev/media3
       
-      # GPIO et devices Raspberry Pi
+      # GPIO
       - /dev/gpiomem:/dev/gpiomem
-      - /dev/vchiq:/dev/vchiq
-      - /dev/dri:/dev/dri
       
     command: /bin/bash
 

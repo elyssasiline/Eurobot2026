@@ -1,0 +1,48 @@
+[0.679s] Invoking command in '/workspace/src/vision': PYTHONPATH=/workspace/build/vision/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/workspace/install/vision/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/vision build --build-base /workspace/build/vision/build install --record /workspace/build/vision/install.log --single-version-externally-managed install_data
+[0.933s] running egg_info
+[0.934s] creating ../../build/vision/vision.egg-info
+[0.934s] writing ../../build/vision/vision.egg-info/PKG-INFO
+[0.934s] writing dependency_links to ../../build/vision/vision.egg-info/dependency_links.txt
+[0.934s] writing entry points to ../../build/vision/vision.egg-info/entry_points.txt
+[0.935s] writing requirements to ../../build/vision/vision.egg-info/requires.txt
+[0.935s] writing top-level names to ../../build/vision/vision.egg-info/top_level.txt
+[0.935s] writing manifest file '../../build/vision/vision.egg-info/SOURCES.txt'
+[0.937s] reading manifest file '../../build/vision/vision.egg-info/SOURCES.txt'
+[0.938s] writing manifest file '../../build/vision/vision.egg-info/SOURCES.txt'
+[0.938s] running build
+[0.938s] running build_py
+[0.938s] creating /workspace/build/vision/build
+[0.938s] creating /workspace/build/vision/build/lib
+[0.938s] creating /workspace/build/vision/build/lib/vision
+[0.938s] copying vision/box_detector_node.py -> /workspace/build/vision/build/lib/vision
+[0.938s] copying vision/aruco_detector_node.py -> /workspace/build/vision/build/lib/vision
+[0.938s] copying vision/__init__.py -> /workspace/build/vision/build/lib/vision
+[0.938s] copying vision/camera_node.py -> /workspace/build/vision/build/lib/vision
+[0.939s] running install
+[0.939s] running install_lib
+[0.940s] creating /workspace/install/vision/lib/python3.10/site-packages/vision
+[0.940s] copying /workspace/build/vision/build/lib/vision/box_detector_node.py -> /workspace/install/vision/lib/python3.10/site-packages/vision
+[0.940s] copying /workspace/build/vision/build/lib/vision/aruco_detector_node.py -> /workspace/install/vision/lib/python3.10/site-packages/vision
+[0.940s] copying /workspace/build/vision/build/lib/vision/__init__.py -> /workspace/install/vision/lib/python3.10/site-packages/vision
+[0.940s] copying /workspace/build/vision/build/lib/vision/camera_node.py -> /workspace/install/vision/lib/python3.10/site-packages/vision
+[0.941s] byte-compiling /workspace/install/vision/lib/python3.10/site-packages/vision/box_detector_node.py to box_detector_node.cpython-310.pyc
+[0.941s] byte-compiling /workspace/install/vision/lib/python3.10/site-packages/vision/aruco_detector_node.py to aruco_detector_node.cpython-310.pyc
+[0.944s] byte-compiling /workspace/install/vision/lib/python3.10/site-packages/vision/__init__.py to __init__.cpython-310.pyc
+[0.944s] byte-compiling /workspace/install/vision/lib/python3.10/site-packages/vision/camera_node.py to camera_node.cpython-310.pyc
+[0.944s] running install_data
+[0.944s] creating /workspace/install/vision/share/ament_index
+[0.944s] creating /workspace/install/vision/share/ament_index/resource_index
+[0.944s] creating /workspace/install/vision/share/ament_index/resource_index/packages
+[0.945s] copying resource/vision -> /workspace/install/vision/share/ament_index/resource_index/packages
+[0.945s] copying package.xml -> /workspace/install/vision/share/vision
+[0.945s] creating /workspace/install/vision/lib/vision
+[0.945s] copying vision/box_detector_node.py -> /workspace/install/vision/lib/vision
+[0.945s] copying vision/aruco_detector_node.py -> /workspace/install/vision/lib/vision
+[0.945s] copying vision/__init__.py -> /workspace/install/vision/lib/vision
+[0.945s] copying vision/camera_node.py -> /workspace/install/vision/lib/vision
+[0.945s] running install_egg_info
+[0.947s] Copying ../../build/vision/vision.egg-info to /workspace/install/vision/lib/python3.10/site-packages/vision-0.1.0-py3.10.egg-info
+[0.948s] running install_scripts
+[0.975s] Installing aruco_detector_node script to /workspace/install/vision/bin
+[0.976s] writing list of installed files to '/workspace/build/vision/install.log'
+[1.027s] Invoked command in '/workspace/src/vision' returned '0': PYTHONPATH=/workspace/build/vision/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/workspace/install/vision/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/vision build --build-base /workspace/build/vision/build install --record /workspace/build/vision/install.log --single-version-externally-managed install_data
