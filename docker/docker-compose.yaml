@@ -56,7 +56,10 @@ services:
       
       # GPIO
       - /dev/gpiomem:/dev/gpiomem
-      
+
+      # RPLidar (généralement /dev/ttyUSB0)
+      - /dev/ttyUSB0:/dev/ttyUSB0      
+    
     command: /bin/bash
 
 volumes:

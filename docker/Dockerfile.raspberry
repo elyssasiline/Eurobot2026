@@ -16,6 +16,11 @@ RUN apt-get update && apt-get install -y \
     && locale-gen en_US.UTF-8 \
     && rm -rf /var/lib/apt/lists/*
 
+# Installation du driver RPLidar
+RUN apt-get update && apt-get install -y \
+    ros-humble-rplidar-ros \
+    && rm -rf /var/lib/apt/lists/*
+
 # Install Dependencies for libcamera
 RUN apt-get update && apt-get install -y \
     git \
