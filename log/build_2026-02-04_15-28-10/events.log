@@ -1,7 +1,0 @@
-[0.000000] (-) TimerEvent: {}
-[0.000715] (-) JobUnselected: {'identifier': 'robot_msgs'}
-[0.000799] (-) JobUnselected: {'identifier': 'vision'}
-[0.000911] (navigation) JobQueued: {'identifier': 'navigation', 'dependencies': OrderedDict()}
-[0.000938] (navigation) JobStarted: {'identifier': 'navigation'}
-[0.012195] (navigation) JobEnded: {'identifier': 'navigation', 'rc': 1}
-[0.022664] (-) EventReactorShutdown: {}

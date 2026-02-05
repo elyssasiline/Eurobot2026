@@ -1,4 +1,0 @@
-[0.000000] (-) TimerEvent: {}
-[0.000477] (-) JobUnselected: {'identifier': 'robot_msgs'}
-[0.000561] (-) JobUnselected: {'identifier': 'vision'}
-[0.000772] (-) EventReactorShutdown: {}

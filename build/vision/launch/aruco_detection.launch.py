@@ -1,1 +1,0 @@
-/workspace/src/vision/launch/aruco_detection.launch.py

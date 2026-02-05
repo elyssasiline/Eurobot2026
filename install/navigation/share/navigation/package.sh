@@ -81,7 +81,7 @@ _colcon_package_sh_source_script() {
 _colcon_package_sh_source_script "$COLCON_CURRENT_PREFIX/share/navigation/hook/path.sh"
 _colcon_package_sh_source_script "$COLCON_CURRENT_PREFIX/share/navigation/hook/pythonpath.sh"
 _colcon_package_sh_source_script "$COLCON_CURRENT_PREFIX/share/navigation/hook/pythonscriptspath.sh"
-_colcon_package_sh_source_script "$COLCON_CURRENT_PREFIX/../../build/navigation/share/navigation/hook/pythonpath_develop.sh"
+_colcon_package_sh_source_script "$COLCON_CURRENT_PREFIX/share/navigation/hook/ament_prefix_path.sh"
 
 unset _colcon_package_sh_source_script
 unset COLCON_CURRENT_PREFIX

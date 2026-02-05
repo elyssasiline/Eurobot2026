@@ -1,0 +1,49 @@
+running egg_info
+creating ../../build/navigation/navigation.egg-info
+writing ../../build/navigation/navigation.egg-info/PKG-INFO
+writing dependency_links to ../../build/navigation/navigation.egg-info/dependency_links.txt
+writing entry points to ../../build/navigation/navigation.egg-info/entry_points.txt
+writing requirements to ../../build/navigation/navigation.egg-info/requires.txt
+writing top-level names to ../../build/navigation/navigation.egg-info/top_level.txt
+writing manifest file '../../build/navigation/navigation.egg-info/SOURCES.txt'
+reading manifest file '../../build/navigation/navigation.egg-info/SOURCES.txt'
+writing manifest file '../../build/navigation/navigation.egg-info/SOURCES.txt'
+running build
+running build_py
+creating /workspace/build/navigation/build
+creating /workspace/build/navigation/build/lib
+creating /workspace/build/navigation/build/lib/navigation
+copying navigation/obstacle_avoidance_node.py -> /workspace/build/navigation/build/lib/navigation
+copying navigation/lidar_test.py -> /workspace/build/navigation/build/lib/navigation
+copying navigation/__init__.py -> /workspace/build/navigation/build/lib/navigation
+copying navigation/navigation_node.py -> /workspace/build/navigation/build/lib/navigation
+copying navigation/lidar_node.py -> /workspace/build/navigation/build/lib/navigation
+running install
+running install_lib
+creating /workspace/install/navigation/lib/python3.10/site-packages/navigation
+copying /workspace/build/navigation/build/lib/navigation/obstacle_avoidance_node.py -> /workspace/install/navigation/lib/python3.10/site-packages/navigation
+copying /workspace/build/navigation/build/lib/navigation/lidar_test.py -> /workspace/install/navigation/lib/python3.10/site-packages/navigation
+copying /workspace/build/navigation/build/lib/navigation/__init__.py -> /workspace/install/navigation/lib/python3.10/site-packages/navigation
+copying /workspace/build/navigation/build/lib/navigation/navigation_node.py -> /workspace/install/navigation/lib/python3.10/site-packages/navigation
+copying /workspace/build/navigation/build/lib/navigation/lidar_node.py -> /workspace/install/navigation/lib/python3.10/site-packages/navigation
+byte-compiling /workspace/install/navigation/lib/python3.10/site-packages/navigation/obstacle_avoidance_node.py to obstacle_avoidance_node.cpython-310.pyc
+byte-compiling /workspace/install/navigation/lib/python3.10/site-packages/navigation/lidar_test.py to lidar_test.cpython-310.pyc
+byte-compiling /workspace/install/navigation/lib/python3.10/site-packages/navigation/__init__.py to __init__.cpython-310.pyc
+byte-compiling /workspace/install/navigation/lib/python3.10/site-packages/navigation/navigation_node.py to navigation_node.cpython-310.pyc
+byte-compiling /workspace/install/navigation/lib/python3.10/site-packages/navigation/lidar_node.py to lidar_node.cpython-310.pyc
+running install_data
+creating /workspace/install/navigation/share/ament_index
+creating /workspace/install/navigation/share/ament_index/resource_index
+creating /workspace/install/navigation/share/ament_index/resource_index/packages
+copying resource/navigation -> /workspace/install/navigation/share/ament_index/resource_index/packages
+copying package.xml -> /workspace/install/navigation/share/navigation
+creating /workspace/install/navigation/share/navigation/launch
+copying launch/navigation_full.launch.py -> /workspace/install/navigation/share/navigation/launch
+copying launch/lidar_test.launch.py -> /workspace/install/navigation/share/navigation/launch
+copying launch/lidar_avoidance.launch.py -> /workspace/install/navigation/share/navigation/launch
+running install_egg_info
+Copying ../../build/navigation/navigation.egg-info to /workspace/install/navigation/lib/python3.10/site-packages/navigation-0.1.0-py3.10.egg-info
+running install_scripts
+Installing lidar_test script to /workspace/install/navigation/bin
+Installing obstacle_avoidance_node script to /workspace/install/navigation/bin
+writing list of installed files to '/workspace/build/navigation/install.log'

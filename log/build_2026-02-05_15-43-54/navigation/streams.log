@@ -1,0 +1,25 @@
+[0.636s] Invoking command in '/workspace/src/navigation': PYTHONPATH=/workspace/build/navigation/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/workspace/install/navigation/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/navigation build --build-base /workspace/build/navigation/build install --record /workspace/build/navigation/install.log --single-version-externally-managed install_data
+[0.873s] running egg_info
+[0.874s] writing ../../build/navigation/navigation.egg-info/PKG-INFO
+[0.874s] writing dependency_links to ../../build/navigation/navigation.egg-info/dependency_links.txt
+[0.875s] writing entry points to ../../build/navigation/navigation.egg-info/entry_points.txt
+[0.875s] writing requirements to ../../build/navigation/navigation.egg-info/requires.txt
+[0.876s] writing top-level names to ../../build/navigation/navigation.egg-info/top_level.txt
+[0.877s] reading manifest file '../../build/navigation/navigation.egg-info/SOURCES.txt'
+[0.877s] writing manifest file '../../build/navigation/navigation.egg-info/SOURCES.txt'
+[0.878s] running build
+[0.879s] running build_py
+[0.879s] copying navigation/lidar_test.py -> /workspace/build/navigation/build/lib/navigation
+[0.879s] running install
+[0.879s] running install_lib
+[0.879s] copying /workspace/build/navigation/build/lib/navigation/lidar_test.py -> /workspace/install/navigation/lib/python3.10/site-packages/navigation
+[0.880s] byte-compiling /workspace/install/navigation/lib/python3.10/site-packages/navigation/lidar_test.py to lidar_test.cpython-310.pyc
+[0.883s] running install_data
+[0.883s] running install_egg_info
+[0.886s] removing '/workspace/install/navigation/lib/python3.10/site-packages/navigation-0.1.0-py3.10.egg-info' (and everything under it)
+[0.886s] Copying ../../build/navigation/navigation.egg-info to /workspace/install/navigation/lib/python3.10/site-packages/navigation-0.1.0-py3.10.egg-info
+[0.887s] running install_scripts
+[0.912s] Installing lidar_test script to /workspace/install/navigation/bin
+[0.913s] Installing obstacle_avoidance_node script to /workspace/install/navigation/bin
+[0.913s] writing list of installed files to '/workspace/build/navigation/install.log'
+[0.963s] Invoked command in '/workspace/src/navigation' returned '0': PYTHONPATH=/workspace/build/navigation/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/workspace/install/navigation/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/navigation build --build-base /workspace/build/navigation/build install --record /workspace/build/navigation/install.log --single-version-externally-managed install_data
