@@ -4,6 +4,8 @@ set -e
 # Source ROS2
 source /opt/ros/${ROS_DISTRO}/setup.bash
 
+source /opt/microros_ws/install/setup.bash
+
 # Source camera_ros build
 source /app/install/setup.bash
 

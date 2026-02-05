@@ -35,7 +35,7 @@ services:
       - QT_X11_NO_MITSHM=1
       
       # ROS2
-      - ROS_DOMAIN_ID=42
+      - ROS_DOMAIN_ID=0
       - ROS_LOCALHOST_ONLY=0
       - PYTHONUNBUFFERED=1
       
@@ -59,8 +59,14 @@ services:
 
       # RPLidar (généralement /dev/ttyUSB0)
       - /dev/ttyUSB0:/dev/ttyUSB0      
+
+      # Teensy (ttyACM0)
+      - /dev/ttyACM0:/dev/ttyACM0
     
     command: /bin/bash
+
+    group_add:
+      - dialout
 
 volumes:
   ros2-cache:
