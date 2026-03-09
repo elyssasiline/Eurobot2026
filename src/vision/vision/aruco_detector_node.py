@@ -1,20 +1,38 @@
 #!/usr/bin/env python3
 """
-Node ROS2 pour la détection de marqueurs ArUco personnalisés
-S'abonne au topic image de camera_ros
+vision/vision/aruco_detector_node.py
+
+Node de détection ArUco personnalisés (patterns 6x6).
+Tous les paramètres viennent de robot_params.yaml.
+
+La logique couleur équipe est appliquée ici :
+  team=blue   → les caisses JAUNE sont à retourner
+  team=yellow → les caisses BLEUE sont à retourner
+
+Topics abonnés :
+  /camera/image_raw  (sensor_msgs/Image)
+
+Topics publiés :
+  /aruco/detections       (vision_msgs/Detection2DArray)
+  /aruco/image_annotated  (sensor_msgs/Image)  si publish_annotated_image=true
+  /aruco/box_to_flip      (std_msgs/String)    — 'FLIP' ou 'KEEP' selon équipe
 """
 
 import rclpy
 from rclpy.node import Node
 from sensor_msgs.msg import Image
 from vision_msgs.msg import Detection2DArray, Detection2D, ObjectHypothesisWithPose
+from std_msgs.msg import String
 from cv_bridge import CvBridge
 import cv2
 import numpy as np
 
-# DÉFINITION DES PATTERNS PERSONNALISÉS (grille 6x6)
+
+# ----------------------------------------------------------
+# Patterns ArUco personnalisés (grille 6x6)
+# ----------------------------------------------------------
 CUSTOM_PATTERNS = {
-    "JAUNE": np.array([
+    'JAUNE': np.array([
         [1, 1, 1, 1, 1, 1],
         [1, 1, 0, 1, 1, 1],
         [1, 0, 1, 0, 0, 1],
@@ -22,8 +40,8 @@ CUSTOM_PATTERNS = {
         [1, 1, 0, 1, 1, 1],
         [1, 1, 1, 1, 1, 1]
     ], dtype=np.uint8),
-    
-    "BLEU": np.array([
+
+    'BLEU': np.array([
         [1, 1, 1, 1, 1, 1],
         [1, 1, 1, 1, 0, 1],
         [1, 0, 1, 1, 1, 1],
@@ -31,263 +49,217 @@ CUSTOM_PATTERNS = {
         [1, 1, 0, 1, 0, 1],
         [1, 1, 1, 1, 1, 1]
     ], dtype=np.uint8),
-    
-    "NOIR": np.array([
+
+    'NOIR': np.array([
         [1, 1, 1, 1, 1, 1],
         [1, 1, 1, 0, 1, 1],
         [1, 0, 1, 0, 1, 1],
         [1, 1, 1, 0, 1, 1],
         [1, 0, 1, 1, 1, 1],
         [1, 1, 1, 1, 1, 1]
-    ], dtype=np.uint8)
+    ], dtype=np.uint8),
 }
 
 PATTERN_COLORS = {
-    "JAUNE": (0, 215, 255),
-    "BLEU": (255, 100, 0),
-    "NOIR": (128, 128, 128)
+    'JAUNE': (0, 215, 255),
+    'BLEU':  (255, 100,   0),
+    'NOIR':  (128, 128, 128),
+}
+
+# Couleur à retourner selon l'équipe
+FLIP_COLOR = {
+    'blue':   'JAUNE',   # équipe bleue  → retourne caisses jaunes
+    'yellow': 'BLEU',    # équipe jaune  → retourne caisses bleues
 }
 
 
 class ArucoDetectorNode(Node):
+
     def __init__(self):
         super().__init__('aruco_detector')
-        
-        # Paramètres
-        self.declare_parameter('confidence_threshold', 0.85)
-        self.declare_parameter('publish_annotated_image', True)
-        self.declare_parameter('camera_topic', '/camera/image_raw')
-        
-        self.confidence_threshold = self.get_parameter('confidence_threshold').value
-        self.publish_annotated = self.get_parameter('publish_annotated_image').value
-        camera_topic = self.get_parameter('camera_topic').value
-        
+
+        # ----------------------------------------------------------
+        # Déclaration paramètres (valeurs par défaut = fallback)
+        # ----------------------------------------------------------
+        self.declare_parameter('robot.team', 'blue')
+
+        self.declare_parameter('vision.confidence_threshold', 0.85)
+        self.declare_parameter('vision.publish_annotated_image', True)
+        self.declare_parameter('vision.camera_topic', '/camera/image_raw')
+
+        # ----------------------------------------------------------
+        # Lecture paramètres
+        # ----------------------------------------------------------
+        self.team = self.get_parameter('robot.team').value
+
+        self.confidence_threshold = self.get_parameter('vision.confidence_threshold').value
+        self.publish_annotated     = self.get_parameter('vision.publish_annotated_image').value
+        camera_topic               = self.get_parameter('vision.camera_topic').value
+
+        # Couleur à retourner selon l'équipe
+        self.flip_color = FLIP_COLOR.get(self.team, 'JAUNE')
+
+        # ----------------------------------------------------------
         # Publishers
+        # ----------------------------------------------------------
         self.detection_pub = self.create_publisher(
-            Detection2DArray, 
-            'aruco/detections', 
-            10
+            Detection2DArray, '/aruco/detections', 10
         )
-        
+        self.flip_pub = self.create_publisher(
+            String, '/aruco/box_to_flip', 10
+        )
         if self.publish_annotated:
-            self.annotated_image_pub = self.create_publisher(
-                Image,
-                'aruco/image_annotated',
-                10
+            self.annotated_pub = self.create_publisher(
+                Image, '/aruco/image_annotated', 10
             )
-        
-        # Subscriber à camera_ros
+
+        # ----------------------------------------------------------
+        # Subscriber
+        # ----------------------------------------------------------
         self.image_sub = self.create_subscription(
-            Image,
-            camera_topic,
-            self.image_callback,
-            10
+            Image, camera_topic, self.image_callback, 10
         )
-        
-        # Bridge OpenCV <-> ROS2
+
         self.bridge = CvBridge()
-        
+
         # Initialiser ArUco
-        self.get_logger().info('Initialisation du détecteur ArUco...')
-        self.aruco_dict = cv2.aruco.Dictionary_get(cv2.aruco.DICT_4X4_50)
+        self.aruco_dict   = cv2.aruco.Dictionary_get(cv2.aruco.DICT_4X4_50)
         self.aruco_params = cv2.aruco.DetectorParameters_create()
-        
-        self.frame_count = 0
+
+        self.frame_count     = 0
         self.detection_count = 0
-        
-        self.get_logger().info('✓ Node ArUco démarré!')
-        self.get_logger().info(f'  • S\'abonne à: {camera_topic}')
+
+        self.get_logger().info(f'✓ ArUcoDetector démarré — équipe: {self.team}')
+        self.get_logger().info(f'  • Couleur à retourner: {self.flip_color}')
         self.get_logger().info(f'  • Seuil confiance: {self.confidence_threshold}')
-    
-    def extract_marker_pattern(self, gray_img, corners):
-        """Extrait le pattern d'un marqueur ArUco"""
-        pts = corners.reshape(4, 2)
-        dst_size = 60
-        dst_pts = np.array([
-            [0, 0],
-            [dst_size, 0],
-            [dst_size, dst_size],
-            [0, dst_size]
-        ], dtype=np.float32)
-        
-        matrix = cv2.getPerspectiveTransform(pts.astype(np.float32), dst_pts)
-        warped = cv2.warpPerspective(gray_img, matrix, (dst_size, dst_size))
-        _, binary = cv2.threshold(warped, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
-        
-        cell_size = dst_size // 6
-        pattern = np.zeros((6, 6), dtype=np.uint8)
-        
-        for i in range(6):
-            for j in range(6):
-                y = i * cell_size + cell_size // 2
-                x = j * cell_size + cell_size // 2
-                sample_region = binary[
-                    max(0, y-2):min(dst_size, y+3),
-                    max(0, x-2):min(dst_size, x+3)
-                ]
-                pattern[i, j] = 1 if np.mean(sample_region) < 128 else 0
-        
-        return pattern
-    
-    def match_pattern(self, pattern):
-        """Compare le pattern avec les patterns personnalisés"""
-        best_match = None
-        best_score = 0
-        best_color = None
-        
-        for color_name, ref_pattern in CUSTOM_PATTERNS.items():
-            for rotation in range(4):
-                rotated = np.rot90(pattern, rotation)
-                matches = np.sum(rotated == ref_pattern)
-                score = matches / 36.0
-                
-                if score > best_score:
-                    best_score = score
-                    best_match = color_name
-                    best_color = PATTERN_COLORS[color_name]
-        
-        if best_score >= self.confidence_threshold:
-            return best_match, best_color, best_score
-        
-        return None, None, best_score
-    
-    def detect_custom_aruco(self, frame):
-        """Détecte les marqueurs ArUco personnalisés"""
-        # Convertir en niveaux de gris
-        if len(frame.shape) == 3:
-            gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-        else:
-            gray = frame
-        
-        corners, ids, rejected = cv2.aruco.detectMarkers(
+        self.get_logger().info(f'  • Topic caméra: {camera_topic}')
+
+    # ----------------------------------------------------------
+    # Traitement image
+    # ----------------------------------------------------------
+    def image_callback(self, msg: Image):
+        try:
+            self.frame_count += 1
+            frame = self.bridge.imgmsg_to_cv2(msg, desired_encoding='bgr8')
+            detected = self._detect(frame)
+
+            if detected:
+                # Publier détections standard
+                self.detection_pub.publish(self._build_detection_msg(detected))
+
+                # Publier décision flip/keep pour chaque marqueur
+                for marker in detected:
+                    flip_msg = String()
+                    if marker['color_name'] == self.flip_color:
+                        flip_msg.data = f"FLIP:{marker['color_name']}:{marker['confidence']:.2f}"
+                    else:
+                        flip_msg.data = f"KEEP:{marker['color_name']}:{marker['confidence']:.2f}"
+                    self.flip_pub.publish(flip_msg)
+
+                self.detection_count += 1
+                markers_str = ', '.join(
+                    [f"{m['color_name']}({m['confidence']*100:.0f}%)" for m in detected]
+                )
+                self.get_logger().info(f'Détection #{self.detection_count}: {markers_str}')
+
+                # Image annotée
+                if self.publish_annotated:
+                    annotated = self._draw_markers(frame, detected)
+                    annotated_msg = self.bridge.cv2_to_imgmsg(annotated, encoding='bgr8')
+                    annotated_msg.header = msg.header
+                    self.annotated_pub.publish(annotated_msg)
+
+        except Exception as e:
+            self.get_logger().error(f'Erreur détection: {e}')
+
+    # ----------------------------------------------------------
+    # Détection interne
+    # ----------------------------------------------------------
+    def _detect(self, frame):
+        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY) if len(frame.shape) == 3 else frame
+        corners, ids, _ = cv2.aruco.detectMarkers(
             gray, self.aruco_dict, parameters=self.aruco_params
         )
-        
-        detected_markers = []
-        
-        if corners is not None and len(corners) > 0:
-            for i, corner in enumerate(corners):
-                pattern = self.extract_marker_pattern(gray, corner[0])
-                color_name, color_bgr, confidence = self.match_pattern(pattern)
-                
+        detected = []
+        if corners:
+            for corner in corners:
+                pattern = self._extract_pattern(gray, corner[0])
+                color_name, color_bgr, confidence = self._match_pattern(pattern)
                 if color_name:
-                    detected_markers.append({
+                    detected.append({
                         'corners': corner[0],
                         'color_name': color_name,
                         'color_bgr': color_bgr,
-                        'confidence': confidence
+                        'confidence': confidence,
                     })
-        
-        return detected_markers
-    
-    def draw_markers_info(self, frame, detected_markers):
-        """Dessine les marqueurs détectés"""
-        frame_annotated = frame.copy()
-        
-        for marker in detected_markers:
-            corner = marker['corners']
-            color_name = marker['color_name']
-            color_bgr = marker['color_bgr']
-            confidence = marker['confidence']
-            
-            center_x = int(np.mean(corner[:, 0]))
-            center_y = int(np.mean(corner[:, 1]))
-            
-            # Contour
-            pts = corner.astype(np.int32)
-            cv2.polylines(frame_annotated, [pts], True, color_bgr, 3)
-            
-            # Coins
-            for point in pts:
-                cv2.circle(frame_annotated, tuple(point), 8, color_bgr, -1)
-            
-            # Centre
-            cv2.circle(frame_annotated, (center_x, center_y), 10, color_bgr, -1)
-            cv2.circle(frame_annotated, (center_x, center_y), 12, (255, 255, 255), 2)
-            
-            # Texte
-            text = f"{color_name} {confidence*100:.0f}%"
-            cv2.putText(frame_annotated, text,
-                       (center_x - 80, center_y - 20),
-                       cv2.FONT_HERSHEY_SIMPLEX, 0.7, color_bgr, 2)
-        
-        return frame_annotated
-    
-    def create_detection_msg(self, detected_markers):
-        """Crée un message Detection2DArray pour ROS2"""
+        return detected
+
+    def _extract_pattern(self, gray, corners):
+        pts = corners.reshape(4, 2)
+        dst_size = 60
+        dst_pts = np.array([[0,0],[dst_size,0],[dst_size,dst_size],[0,dst_size]], dtype=np.float32)
+        M = cv2.getPerspectiveTransform(pts.astype(np.float32), dst_pts)
+        warped = cv2.warpPerspective(gray, M, (dst_size, dst_size))
+        _, binary = cv2.threshold(warped, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
+        cell = dst_size // 6
+        pattern = np.zeros((6, 6), dtype=np.uint8)
+        for i in range(6):
+            for j in range(6):
+                y, x = i * cell + cell // 2, j * cell + cell // 2
+                region = binary[max(0,y-2):min(dst_size,y+3), max(0,x-2):min(dst_size,x+3)]
+                pattern[i, j] = 1 if np.mean(region) < 128 else 0
+        return pattern
+
+    def _match_pattern(self, pattern):
+        best_match, best_score, best_color = None, 0, None
+        for color_name, ref in CUSTOM_PATTERNS.items():
+            for r in range(4):
+                score = np.sum(np.rot90(pattern, r) == ref) / 36.0
+                if score > best_score:
+                    best_score, best_match, best_color = score, color_name, PATTERN_COLORS[color_name]
+        if best_score >= self.confidence_threshold:
+            return best_match, best_color, best_score
+        return None, None, best_score
+
+    def _build_detection_msg(self, detected):
         msg = Detection2DArray()
         msg.header.stamp = self.get_clock().now().to_msg()
         msg.header.frame_id = 'camera_frame'
-        
-        for marker in detected_markers:
-            detection = Detection2D()
-            
-            # Centre du marqueur
-            corner = marker['corners']
-            center_x = float(np.mean(corner[:, 0]))
-            center_y = float(np.mean(corner[:, 1]))
-            
-            detection.bbox.center.position.x = center_x
-            detection.bbox.center.position.y = center_y
-            
-            # Taille approximative
-            width = float(np.linalg.norm(corner[0] - corner[1]))
-            height = float(np.linalg.norm(corner[1] - corner[2]))
-            detection.bbox.size_x = width
-            detection.bbox.size_y = height
-            
-            # Hypothèse (couleur détectée)
-            hypothesis = ObjectHypothesisWithPose()
-            hypothesis.hypothesis.class_id = marker['color_name']
-            hypothesis.hypothesis.score = marker['confidence']
-            detection.results.append(hypothesis)
-            
-            msg.detections.append(detection)
-        
+        for marker in detected:
+            det = Detection2D()
+            c = marker['corners']
+            det.bbox.center.position.x = float(np.mean(c[:, 0]))
+            det.bbox.center.position.y = float(np.mean(c[:, 1]))
+            det.bbox.size_x = float(np.linalg.norm(c[0] - c[1]))
+            det.bbox.size_y = float(np.linalg.norm(c[1] - c[2]))
+            hyp = ObjectHypothesisWithPose()
+            hyp.hypothesis.class_id = marker['color_name']
+            hyp.hypothesis.score    = marker['confidence']
+            det.results.append(hyp)
+            msg.detections.append(det)
         return msg
-    
-    def image_callback(self, msg):
-        """Callback pour les images reçues de camera_ros"""
-        try:
-            self.frame_count += 1
-            
-            # Convertir le message ROS en image OpenCV
-            frame = self.bridge.imgmsg_to_cv2(msg, desired_encoding='bgr8')
-            
-            # Détecter les marqueurs
-            detected_markers = self.detect_custom_aruco(frame)
-            
-            # Publier les détections
-            if detected_markers:
-                detection_msg = self.create_detection_msg(detected_markers)
-                self.detection_pub.publish(detection_msg)
-                
-                self.detection_count += 1
-                
-                # Log des détections
-                markers_str = ', '.join([f"{m['color_name']}({m['confidence']*100:.0f}%)" 
-                                        for m in detected_markers])
-                self.get_logger().info(f"Détection #{self.detection_count}: {markers_str}")
-                
-                # Publier l'image annotée
-                if self.publish_annotated:
-                    frame_annotated = self.draw_markers_info(frame, detected_markers)
-                    annotated_msg = self.bridge.cv2_to_imgmsg(
-                        frame_annotated, 
-                        encoding='bgr8'
-                    )
-                    annotated_msg.header.stamp = msg.header.stamp
-                    annotated_msg.header.frame_id = 'camera_frame'
-                    self.annotated_image_pub.publish(annotated_msg)
-            
-        except Exception as e:
-            self.get_logger().error(f'Erreur lors de la détection: {e}')
+
+    def _draw_markers(self, frame, detected):
+        out = frame.copy()
+        for m in detected:
+            c = m['corners'].astype(np.int32)
+            cx, cy = int(np.mean(c[:, 0])), int(np.mean(c[:, 1]))
+            col = m['color_bgr']
+            cv2.polylines(out, [c], True, col, 3)
+            for pt in c:
+                cv2.circle(out, tuple(pt), 8, col, -1)
+            cv2.circle(out, (cx, cy), 10, col, -1)
+            cv2.circle(out, (cx, cy), 12, (255,255,255), 2)
+            action = 'FLIP' if m['color_name'] == self.flip_color else 'KEEP'
+            label = f"{m['color_name']} {m['confidence']*100:.0f}% [{action}]"
+            cv2.putText(out, label, (cx - 90, cy - 20),
+                        cv2.FONT_HERSHEY_SIMPLEX, 0.7, col, 2)
+        return out
 
 
 def main(args=None):
     rclpy.init(args=args)
     node = ArucoDetectorNode()
-    
     try:
         rclpy.spin(node)
     except KeyboardInterrupt:

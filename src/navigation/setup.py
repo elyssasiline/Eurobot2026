@@ -1,4 +1,4 @@
-from setuptools import setup, find_packages
+from setuptools import setup
 import os
 from glob import glob
 
@@ -7,7 +7,7 @@ package_name = 'navigation'
 setup(
     name=package_name,
     version='0.1.0',
-    packages=[package_name],  # ← Important : juste le nom du package
+    packages=[package_name],
     data_files=[
         ('share/ament_index/resource_index/packages',
             ['resource/' + package_name]),
@@ -19,7 +19,7 @@ setup(
     zip_safe=True,
     maintainer='Elyssa',
     maintainer_email='elyssa@robot.com',
-    description='Navigation package with obstacle avoidance',
+    description='Navigation — lidar + évitement obstacles',
     license='MIT',
     tests_require=['pytest'],
     entry_points={

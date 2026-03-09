@@ -1,0 +1,86 @@
+[0.000000] (-) TimerEvent: {}
+[0.000452] (-) JobUnselected: {'identifier': 'robot_msgs'}
+[0.000705] (navigation) JobQueued: {'identifier': 'navigation', 'dependencies': OrderedDict()}
+[0.000734] (robot_bringup) JobQueued: {'identifier': 'robot_bringup', 'dependencies': OrderedDict()}
+[0.000862] (vision) JobQueued: {'identifier': 'vision', 'dependencies': OrderedDict()}
+[0.000883] (navigation) JobStarted: {'identifier': 'navigation'}
+[0.009026] (robot_bringup) JobStarted: {'identifier': 'robot_bringup'}
+[0.011109] (vision) JobStarted: {'identifier': 'vision'}
+[0.099710] (-) TimerEvent: {}
+[0.200212] (-) TimerEvent: {}
+[0.300980] (-) TimerEvent: {}
+[0.401756] (-) TimerEvent: {}
+[0.502507] (-) TimerEvent: {}
+[0.603220] (-) TimerEvent: {}
+[0.703917] (-) TimerEvent: {}
+[0.804761] (-) TimerEvent: {}
+[0.905128] (-) TimerEvent: {}
+[1.005439] (-) TimerEvent: {}
+[1.106755] (-) TimerEvent: {}
+[1.207115] (-) TimerEvent: {}
+[1.307498] (-) TimerEvent: {}
+[1.407910] (-) TimerEvent: {}
+[1.449972] (robot_bringup) Command: {'cmd': ['/usr/bin/python3', '-W', 'ignore:setup.py install is deprecated', '-W', 'ignore:easy_install command is deprecated', 'setup.py', 'egg_info', '--egg-base', '../../build/robot_bringup', 'build', '--build-base', '/home/elyssa/robot_ws/build/robot_bringup/build', 'install', '--record', '/home/elyssa/robot_ws/build/robot_bringup/install.log', '--single-version-externally-managed', 'install_data'], 'cwd': '/home/elyssa/robot_ws/src/robot_bringup', 'env': {'SUDO_GID': '1000', 'MAIL': '/var/mail/root', 'USER': 'root', 'SHLVL': '1', 'HOME': '/root', 'OLDPWD': '/home/elyssa', 'COLORTERM': 'truecolor', 'COLCON_PREFIX_PATH': '/home/elyssa/robot_ws/install', 'SUDO_UID': '1000', 'LOGNAME': 'root', '_': '/usr/local/bin/colcon', 'TERM': 'xterm-256color', 'PATH': '/home/elyssa/robot_ws/install/navigation/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/root/.local/bin:/root/.local/bin', 'LANG': 'en_GB.UTF-8', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=00:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.avif=01;35:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:*~=00;90:*#=00;90:*.bak=00;90:*.old=00;90:*.orig=00;90:*.part=00;90:*.rej=00;90:*.swp=00;90:*.tmp=00;90:*.dpkg-dist=00;90:*.dpkg-old=00;90:*.ucf-dist=00;90:*.ucf-new=00;90:*.ucf-old=00;90:*.rpmnew=00;90:*.rpmorig=00;90:*.rpmsave=00;90:', 'SUDO_COMMAND': '/usr/bin/su', 'AMENT_PREFIX_PATH': '/home/elyssa/robot_ws/install/navigation', 'SHELL': '/bin/bash', 'NO_AT_BRIDGE': '1', 'SUDO_USER': 'elyssa', 'PWD': '/home/elyssa/robot_ws/build/robot_bringup', 'PYTHONPATH': '/home/elyssa/robot_ws/build/robot_bringup/prefix_override:/usr/local/lib/python3.11/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/elyssa/robot_ws/install/robot_bringup/lib/python3.11/site-packages:/home/elyssa/robot_ws/install/navigation/lib/python3.10/site-packages', 'COLCON': '1'}, 'shell': False}
+[1.508026] (-) TimerEvent: {}
+[1.608467] (-) TimerEvent: {}
+[1.709163] (-) TimerEvent: {}
+[1.810240] (-) TimerEvent: {}
+[1.817589] (robot_bringup) StdoutLine: {'line': b'running egg_info\n'}
+[1.833275] (robot_bringup) StdoutLine: {'line': b'writing ../../build/robot_bringup/robot_bringup.egg-info/PKG-INFO\n'}
+[1.834413] (robot_bringup) StdoutLine: {'line': b'writing dependency_links to ../../build/robot_bringup/robot_bringup.egg-info/dependency_links.txt\n'}
+[1.834764] (robot_bringup) StdoutLine: {'line': b'writing requirements to ../../build/robot_bringup/robot_bringup.egg-info/requires.txt\n'}
+[1.834895] (robot_bringup) StdoutLine: {'line': b'writing top-level names to ../../build/robot_bringup/robot_bringup.egg-info/top_level.txt\n'}
+[1.849533] (robot_bringup) StderrLine: {'line': b"error: package directory 'robot_bringup' does not exist\n"}
+[1.902174] (vision) Command: {'cmd': ['/usr/bin/python3', '-W', 'ignore:setup.py install is deprecated', '-W', 'ignore:easy_install command is deprecated', 'setup.py', 'egg_info', '--egg-base', '../../build/vision', 'build', '--build-base', '/home/elyssa/robot_ws/build/vision/build', 'install', '--record', '/home/elyssa/robot_ws/build/vision/install.log', '--single-version-externally-managed', 'install_data'], 'cwd': '/home/elyssa/robot_ws/src/vision', 'env': {'SUDO_GID': '1000', 'MAIL': '/var/mail/root', 'USER': 'root', 'SHLVL': '1', 'HOME': '/root', 'OLDPWD': '/home/elyssa', 'COLORTERM': 'truecolor', 'COLCON_PREFIX_PATH': '/home/elyssa/robot_ws/install', 'SUDO_UID': '1000', 'LOGNAME': 'root', '_': '/usr/local/bin/colcon', 'TERM': 'xterm-256color', 'PATH': '/home/elyssa/robot_ws/install/navigation/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/root/.local/bin:/root/.local/bin', 'LANG': 'en_GB.UTF-8', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=00:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.avif=01;35:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:*~=00;90:*#=00;90:*.bak=00;90:*.old=00;90:*.orig=00;90:*.part=00;90:*.rej=00;90:*.swp=00;90:*.tmp=00;90:*.dpkg-dist=00;90:*.dpkg-old=00;90:*.ucf-dist=00;90:*.ucf-new=00;90:*.ucf-old=00;90:*.rpmnew=00;90:*.rpmorig=00;90:*.rpmsave=00;90:', 'SUDO_COMMAND': '/usr/bin/su', 'AMENT_PREFIX_PATH': '/home/elyssa/robot_ws/install/navigation', 'SHELL': '/bin/bash', 'NO_AT_BRIDGE': '1', 'SUDO_USER': 'elyssa', 'PWD': '/home/elyssa/robot_ws/build/vision', 'PYTHONPATH': '/home/elyssa/robot_ws/build/vision/prefix_override:/usr/local/lib/python3.11/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/elyssa/robot_ws/install/vision/lib/python3.11/site-packages:/home/elyssa/robot_ws/install/navigation/lib/python3.10/site-packages', 'COLCON': '1'}, 'shell': False}
+[1.910374] (-) TimerEvent: {}
+[1.950764] (navigation) Command: {'cmd': ['/usr/bin/python3', '-W', 'ignore:setup.py install is deprecated', '-W', 'ignore:easy_install command is deprecated', 'setup.py', 'egg_info', '--egg-base', '../../build/navigation', 'build', '--build-base', '/home/elyssa/robot_ws/build/navigation/build', 'install', '--record', '/home/elyssa/robot_ws/build/navigation/install.log', '--single-version-externally-managed', 'install_data'], 'cwd': '/home/elyssa/robot_ws/src/navigation', 'env': {'SUDO_GID': '1000', 'MAIL': '/var/mail/root', 'USER': 'root', 'SHLVL': '1', 'HOME': '/root', 'OLDPWD': '/home/elyssa', 'COLORTERM': 'truecolor', 'COLCON_PREFIX_PATH': '/home/elyssa/robot_ws/install', 'SUDO_UID': '1000', 'LOGNAME': 'root', '_': '/usr/local/bin/colcon', 'TERM': 'xterm-256color', 'PATH': '/home/elyssa/robot_ws/install/navigation/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/root/.local/bin:/root/.local/bin', 'LANG': 'en_GB.UTF-8', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=00:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.avif=01;35:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:*~=00;90:*#=00;90:*.bak=00;90:*.old=00;90:*.orig=00;90:*.part=00;90:*.rej=00;90:*.swp=00;90:*.tmp=00;90:*.dpkg-dist=00;90:*.dpkg-old=00;90:*.ucf-dist=00;90:*.ucf-new=00;90:*.ucf-old=00;90:*.rpmnew=00;90:*.rpmorig=00;90:*.rpmsave=00;90:', 'SUDO_COMMAND': '/usr/bin/su', 'AMENT_PREFIX_PATH': '/home/elyssa/robot_ws/install/navigation', 'SHELL': '/bin/bash', 'NO_AT_BRIDGE': '1', 'SUDO_USER': 'elyssa', 'PWD': '/home/elyssa/robot_ws/build/navigation', 'PYTHONPATH': '/home/elyssa/robot_ws/build/navigation/prefix_override:/usr/local/lib/python3.11/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/elyssa/robot_ws/install/navigation/lib/python3.11/site-packages:/home/elyssa/robot_ws/install/navigation/lib/python3.10/site-packages', 'COLCON': '1'}, 'shell': False}
+[1.977851] (robot_bringup) CommandEnded: {'returncode': 1}
+[1.978218] (robot_bringup) JobEnded: {'identifier': 'robot_bringup', 'rc': 1}
+[2.010466] (-) TimerEvent: {}
+[2.110940] (-) TimerEvent: {}
+[2.211678] (-) TimerEvent: {}
+[2.247979] (vision) StdoutLine: {'line': b'running egg_info\n'}
+[2.258706] (vision) StdoutLine: {'line': b'writing ../../build/vision/vision.egg-info/PKG-INFO\n'}
+[2.259502] (vision) StdoutLine: {'line': b'writing dependency_links to ../../build/vision/vision.egg-info/dependency_links.txt\n'}
+[2.259612] (vision) StdoutLine: {'line': b'writing entry points to ../../build/vision/vision.egg-info/entry_points.txt\n'}
+[2.259670] (vision) StdoutLine: {'line': b'writing requirements to ../../build/vision/vision.egg-info/requires.txt\n'}
+[2.260732] (vision) StdoutLine: {'line': b'writing top-level names to ../../build/vision/vision.egg-info/top_level.txt\n'}
+[2.280698] (vision) StdoutLine: {'line': b"reading manifest file '../../build/vision/vision.egg-info/SOURCES.txt'\n"}
+[2.281619] (vision) StdoutLine: {'line': b"writing manifest file '../../build/vision/vision.egg-info/SOURCES.txt'\n"}
+[2.282105] (vision) StdoutLine: {'line': b'running build\n'}
+[2.282184] (vision) StdoutLine: {'line': b'running build_py\n'}
+[2.282338] (vision) StdoutLine: {'line': b'running install\n'}
+[2.289577] (vision) StdoutLine: {'line': b'running install_lib\n'}
+[2.294529] (navigation) StdoutLine: {'line': b'running egg_info\n'}
+[2.300428] (vision) StdoutLine: {'line': b'running install_data\n'}
+[2.300839] (vision) StdoutLine: {'line': b'running install_egg_info\n'}
+[2.305053] (navigation) StdoutLine: {'line': b'writing ../../build/navigation/navigation.egg-info/PKG-INFO\n'}
+[2.305636] (navigation) StdoutLine: {'line': b'writing dependency_links to ../../build/navigation/navigation.egg-info/dependency_links.txt\n'}
+[2.305778] (navigation) StdoutLine: {'line': b'writing entry points to ../../build/navigation/navigation.egg-info/entry_points.txt\n'}
+[2.306011] (navigation) StdoutLine: {'line': b'writing requirements to ../../build/navigation/navigation.egg-info/requires.txt\n'}
+[2.306200] (navigation) StdoutLine: {'line': b'writing top-level names to ../../build/navigation/navigation.egg-info/top_level.txt\n'}
+[2.311759] (-) TimerEvent: {}
+[2.312578] (vision) StdoutLine: {'line': b"removing '/home/elyssa/robot_ws/install/vision/lib/python3.11/site-packages/vision-0.1.0-py3.11.egg-info' (and everything under it)\n"}
+[2.313002] (vision) StdoutLine: {'line': b'Copying ../../build/vision/vision.egg-info to /home/elyssa/robot_ws/install/vision/lib/python3.11/site-packages/vision-0.1.0-py3.11.egg-info\n'}
+[2.313494] (vision) StdoutLine: {'line': b'running install_scripts\n'}
+[2.328146] (navigation) StdoutLine: {'line': b"reading manifest file '../../build/navigation/navigation.egg-info/SOURCES.txt'\n"}
+[2.329321] (navigation) StdoutLine: {'line': b"writing manifest file '../../build/navigation/navigation.egg-info/SOURCES.txt'\n"}
+[2.329888] (navigation) StdoutLine: {'line': b'running build\n'}
+[2.329981] (navigation) StdoutLine: {'line': b'running build_py\n'}
+[2.330231] (navigation) StdoutLine: {'line': b'running install\n'}
+[2.338248] (navigation) StdoutLine: {'line': b'running install_lib\n'}
+[2.349850] (navigation) StdoutLine: {'line': b'running install_data\n'}
+[2.350343] (navigation) StdoutLine: {'line': b'running install_egg_info\n'}
+[2.362092] (navigation) StdoutLine: {'line': b"removing '/home/elyssa/robot_ws/install/navigation/lib/python3.11/site-packages/navigation-0.1.0-py3.11.egg-info' (and everything under it)\n"}
+[2.362609] (navigation) StdoutLine: {'line': b'Copying ../../build/navigation/navigation.egg-info to /home/elyssa/robot_ws/install/navigation/lib/python3.11/site-packages/navigation-0.1.0-py3.11.egg-info\n'}
+[2.363453] (navigation) StdoutLine: {'line': b'running install_scripts\n'}
+[2.364091] (vision) StdoutLine: {'line': b'Installing aruco_detector_node script to /home/elyssa/robot_ws/install/vision/bin\n'}
+[2.364639] (vision) StdoutLine: {'line': b"writing list of installed files to '/home/elyssa/robot_ws/build/vision/install.log'\n"}
+[2.411851] (-) TimerEvent: {}
+[2.421864] (navigation) StdoutLine: {'line': b'Installing lidar_test script to /home/elyssa/robot_ws/install/navigation/bin\n'}
+[2.422715] (navigation) StdoutLine: {'line': b'Installing obstacle_avoidance_node script to /home/elyssa/robot_ws/install/navigation/bin\n'}
+[2.423074] (navigation) StdoutLine: {'line': b"writing list of installed files to '/home/elyssa/robot_ws/build/navigation/install.log'\n"}
+[2.479936] (vision) JobEnded: {'identifier': 'vision', 'rc': 'SIGINT'}
+[2.511965] (-) TimerEvent: {}
+[2.533706] (navigation) JobEnded: {'identifier': 'navigation', 'rc': 'SIGINT'}
+[2.534844] (-) EventReactorShutdown: {}

@@ -1,0 +1,21 @@
+[1.286s] Invoking command in '/workspace/build/navigation': PYTHONPATH=/workspace/build/navigation/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/workspace/install/navigation/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /workspace/build/navigation/build --no-deps symlink_data --force
+[1.560s] running develop
+[1.657s] running egg_info
+[1.659s] writing navigation.egg-info/PKG-INFO
+[1.660s] writing dependency_links to navigation.egg-info/dependency_links.txt
+[1.661s] writing entry points to navigation.egg-info/entry_points.txt
+[1.661s] writing requirements to navigation.egg-info/requires.txt
+[1.661s] writing top-level names to navigation.egg-info/top_level.txt
+[1.662s] reading manifest file 'navigation.egg-info/SOURCES.txt'
+[1.665s] writing manifest file 'navigation.egg-info/SOURCES.txt'
+[1.666s] running build_ext
+[1.666s] Creating /workspace/install/navigation/lib/python3.10/site-packages/navigation.egg-link (link to .)
+[1.669s] Installing lidar_test script to /workspace/install/navigation/bin
+[1.670s] Installing obstacle_avoidance_node script to /workspace/install/navigation/bin
+[1.670s] 
+[1.671s] Installed /workspace/build/navigation
+[1.671s] running symlink_data
+[1.671s] symbolically linking /workspace/build/navigation/resource/navigation -> /workspace/install/navigation/share/ament_index/resource_index/packages
+[1.673s] symbolically linking /workspace/build/navigation/package.xml -> /workspace/install/navigation/share/navigation
+[1.674s] symbolically linking /workspace/build/navigation/launch/navigation_full.launch.py -> /workspace/install/navigation/share/navigation/launch
+[1.675s] symbolically linking /workspace/build/navigation/launch/lidar_avoidance.launch.py -> /workspace/install/navigation/share/navigation/launch

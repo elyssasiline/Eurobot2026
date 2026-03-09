@@ -1,55 +1,74 @@
+"""
+navigation/launch/lidar.launch.py
+
+Lance le RPLidar + le node d'évitement d'obstacles.
+Les paramètres viennent du robot_params.yaml de robot_bringup.
+
+Usage standalone :
+  ros2 launch navigation lidar.launch.py
+Usage depuis robot_bringup (config injecté automatiquement) :
+  ros2 launch robot_bringup robot.launch.py
+"""
+
+import os
+from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
-from launch_ros.actions import Node
 from launch.actions import DeclareLaunchArgument
 from launch.substitutions import LaunchConfiguration
+from launch_ros.actions import Node
+
 
 def generate_launch_description():
-    # Arguments
-    serial_port_arg = DeclareLaunchArgument(
-        'serial_port',
-        default_value='/dev/ttyUSB0',
-        description='Port série du RPLidar'
+
+    # ----------------------------------------------------------
+    # Config : priorité à l'argument injecté par robot_bringup,
+    # fallback sur le YAML local de navigation si lancé seul
+    # ----------------------------------------------------------
+    default_config = os.path.join(
+        get_package_share_directory('robot_bringup'),
+        'config', 'robot_params.yaml'
     )
-    
-    frame_id_arg = DeclareLaunchArgument(
-        'frame_id',
-        default_value='laser_frame',
-        description='Frame ID du lidar'
+
+    config_arg = DeclareLaunchArgument(
+        'config',
+        default_value=default_config,
+        description='Chemin vers robot_params.yaml'
     )
-    
+
+    team_arg = DeclareLaunchArgument(
+        'team',
+        default_value='blue',
+        description="Couleur équipe : 'blue' ou 'yellow'"
+    )
+
+    config = LaunchConfiguration('config')
+    team   = LaunchConfiguration('team')
+
     return LaunchDescription([
-        serial_port_arg,
-        frame_id_arg,
-        
-        # Node RPLidar
+        config_arg,
+        team_arg,
+
+        # RPLidar A1 — paramètres lus depuis le YAML (section navigation)
         Node(
             package='rplidar_ros',
             executable='rplidar_composition',
             name='rplidar',
-            parameters=[{
-                'serial_port': LaunchConfiguration('serial_port'),
-                'frame_id': LaunchConfiguration('frame_id'),
-                'angle_compensate': True,
-                'scan_mode': 'Standard',  # ou 'Express' pour A1M8
-                'serial_baudrate': 115200,
-            }],
+            parameters=[
+                config,
+                {'robot.team': team},
+            ],
             output='screen'
         ),
-        
-        # Node Obstacle Avoidance
+
+        # Obstacle avoidance
         Node(
             package='navigation',
             executable='obstacle_avoidance_node',
             name='obstacle_avoidance',
-            parameters=[{
-                'min_obstacle_distance': 0.3,      # 30cm
-                'critical_distance': 0.15,          # 15cm
-                'front_angle_range': 45.0,          # 45° devant
-                'side_angle_range': 90.0,           # 90° sur les côtés
-                'max_linear_speed': 0.3,            # m/s
-                'max_angular_speed': 1.0,           # rad/s
-                'enable_avoidance': True,
-            }],
+            parameters=[
+                config,
+                {'robot.team': team},
+            ],
             output='screen'
         ),
     ])

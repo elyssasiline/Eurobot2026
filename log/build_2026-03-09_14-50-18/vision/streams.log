@@ -1,0 +1,46 @@
+[1.913s] Invoking command in '/home/elyssa/robot_ws/src/vision': PYTHONPATH=/home/elyssa/robot_ws/build/vision/prefix_override:/usr/local/lib/python3.11/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/elyssa/robot_ws/install/vision/lib/python3.11/site-packages: /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/vision build --build-base /home/elyssa/robot_ws/build/vision/build install --record /home/elyssa/robot_ws/build/vision/install.log --single-version-externally-managed install_data
+[2.264s] running egg_info
+[2.264s] creating ../../build/vision/vision.egg-info
+[2.274s] writing ../../build/vision/vision.egg-info/PKG-INFO
+[2.275s] writing dependency_links to ../../build/vision/vision.egg-info/dependency_links.txt
+[2.276s] writing entry points to ../../build/vision/vision.egg-info/entry_points.txt
+[2.276s] writing requirements to ../../build/vision/vision.egg-info/requires.txt
+[2.276s] writing top-level names to ../../build/vision/vision.egg-info/top_level.txt
+[2.276s] writing manifest file '../../build/vision/vision.egg-info/SOURCES.txt'
+[2.296s] reading manifest file '../../build/vision/vision.egg-info/SOURCES.txt'
+[2.297s] writing manifest file '../../build/vision/vision.egg-info/SOURCES.txt'
+[2.298s] running build
+[2.298s] running build_py
+[2.298s] creating /home/elyssa/robot_ws/build/vision/build
+[2.298s] creating /home/elyssa/robot_ws/build/vision/build/lib
+[2.298s] creating /home/elyssa/robot_ws/build/vision/build/lib/vision
+[2.300s] copying vision/box_detector_node.py -> /home/elyssa/robot_ws/build/vision/build/lib/vision
+[2.300s] copying vision/aruco_detector_node.py -> /home/elyssa/robot_ws/build/vision/build/lib/vision
+[2.300s] copying vision/__init__.py -> /home/elyssa/robot_ws/build/vision/build/lib/vision
+[2.300s] copying vision/camera_node.py -> /home/elyssa/robot_ws/build/vision/build/lib/vision
+[2.300s] running install
+[2.306s] running install_lib
+[2.317s] creating /home/elyssa/robot_ws/install/vision/lib/python3.11/site-packages/vision
+[2.317s] copying /home/elyssa/robot_ws/build/vision/build/lib/vision/box_detector_node.py -> /home/elyssa/robot_ws/install/vision/lib/python3.11/site-packages/vision
+[2.318s] copying /home/elyssa/robot_ws/build/vision/build/lib/vision/aruco_detector_node.py -> /home/elyssa/robot_ws/install/vision/lib/python3.11/site-packages/vision
+[2.318s] copying /home/elyssa/robot_ws/build/vision/build/lib/vision/__init__.py -> /home/elyssa/robot_ws/install/vision/lib/python3.11/site-packages/vision
+[2.318s] copying /home/elyssa/robot_ws/build/vision/build/lib/vision/camera_node.py -> /home/elyssa/robot_ws/install/vision/lib/python3.11/site-packages/vision
+[2.319s] byte-compiling /home/elyssa/robot_ws/install/vision/lib/python3.11/site-packages/vision/box_detector_node.py to box_detector_node.cpython-311.pyc
+[2.322s] byte-compiling /home/elyssa/robot_ws/install/vision/lib/python3.11/site-packages/vision/aruco_detector_node.py to aruco_detector_node.cpython-311.pyc
+[2.322s] byte-compiling /home/elyssa/robot_ws/install/vision/lib/python3.11/site-packages/vision/__init__.py to __init__.cpython-311.pyc
+[2.322s] byte-compiling /home/elyssa/robot_ws/install/vision/lib/python3.11/site-packages/vision/camera_node.py to camera_node.cpython-311.pyc
+[2.322s] running install_data
+[2.322s] creating /home/elyssa/robot_ws/install/vision/share/ament_index
+[2.323s] creating /home/elyssa/robot_ws/install/vision/share/ament_index/resource_index
+[2.323s] creating /home/elyssa/robot_ws/install/vision/share/ament_index/resource_index/packages
+[2.323s] copying resource/vision -> /home/elyssa/robot_ws/install/vision/share/ament_index/resource_index/packages
+[2.323s] copying package.xml -> /home/elyssa/robot_ws/install/vision/share/vision
+[2.323s] creating /home/elyssa/robot_ws/install/vision/share/vision/launch
+[2.325s] copying launch/aruco_detection.launch.py -> /home/elyssa/robot_ws/install/vision/share/vision/launch
+[2.326s] copying launch/camera.launch.py -> /home/elyssa/robot_ws/install/vision/share/vision/launch
+[2.326s] copying launch/vision_full.launch.py -> /home/elyssa/robot_ws/install/vision/share/vision/launch
+[2.326s] running install_egg_info
+[2.334s] Copying ../../build/vision/vision.egg-info to /home/elyssa/robot_ws/install/vision/lib/python3.11/site-packages/vision-0.1.0-py3.11.egg-info
+[2.339s] running install_scripts
+[2.390s] Installing aruco_detector_node script to /home/elyssa/robot_ws/install/vision/bin
+[2.391s] writing list of installed files to '/home/elyssa/robot_ws/build/vision/install.log'

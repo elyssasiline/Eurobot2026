@@ -1,0 +1,10 @@
+[1.710s] Invoking command in '/home/elyssa/robot_ws/src/robot_bringup': PYTHONPATH=/home/elyssa/robot_ws/build/robot_bringup/prefix_override:/usr/local/lib/python3.11/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/elyssa/robot_ws/install/robot_bringup/lib/python3.11/site-packages: /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/robot_bringup build --build-base /home/elyssa/robot_ws/build/robot_bringup/build install --record /home/elyssa/robot_ws/build/robot_bringup/install.log --single-version-externally-managed install_data
+[2.110s] running egg_info
+[2.112s] creating ../../build/robot_bringup/robot_bringup.egg-info
+[2.124s] writing ../../build/robot_bringup/robot_bringup.egg-info/PKG-INFO
+[2.125s] writing dependency_links to ../../build/robot_bringup/robot_bringup.egg-info/dependency_links.txt
+[2.125s] writing requirements to ../../build/robot_bringup/robot_bringup.egg-info/requires.txt
+[2.125s] writing top-level names to ../../build/robot_bringup/robot_bringup.egg-info/top_level.txt
+[2.125s] writing manifest file '../../build/robot_bringup/robot_bringup.egg-info/SOURCES.txt'
+[2.137s] error: package directory 'robot_bringup' does not exist
+[2.242s] Invoked command in '/home/elyssa/robot_ws/src/robot_bringup' returned '1': PYTHONPATH=/home/elyssa/robot_ws/build/robot_bringup/prefix_override:/usr/local/lib/python3.11/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/elyssa/robot_ws/install/robot_bringup/lib/python3.11/site-packages: /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/robot_bringup build --build-base /home/elyssa/robot_ws/build/robot_bringup/build install --record /home/elyssa/robot_ws/build/robot_bringup/install.log --single-version-externally-managed install_data

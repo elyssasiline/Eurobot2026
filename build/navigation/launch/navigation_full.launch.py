@@ -1,0 +1,1 @@
+/workspace/src/navigation/launch/navigation_full.launch.py

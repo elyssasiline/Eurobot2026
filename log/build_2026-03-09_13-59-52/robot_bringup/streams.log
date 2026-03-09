@@ -1,0 +1,28 @@
+[0.950s] Invoking command in '/workspace/build/robot_bringup': PYTHONPATH=/workspace/build/robot_bringup/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/workspace/install/robot_bringup/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /workspace/build/robot_bringup/build --no-deps symlink_data
+[1.262s] running develop
+[1.372s] running egg_info
+[1.372s] writing robot_bringup.egg-info/PKG-INFO
+[1.372s] writing dependency_links to robot_bringup.egg-info/dependency_links.txt
+[1.374s] writing entry points to robot_bringup.egg-info/entry_points.txt
+[1.374s] writing requirements to robot_bringup.egg-info/requires.txt
+[1.374s] writing top-level names to robot_bringup.egg-info/top_level.txt
+[1.376s] reading manifest file 'robot_bringup.egg-info/SOURCES.txt'
+[1.376s] writing manifest file 'robot_bringup.egg-info/SOURCES.txt'
+[1.378s] running build_ext
+[1.379s] Creating /workspace/install/robot_bringup/lib/python3.10/site-packages/robot-bringup.egg-link (link to .)
+[1.380s] 
+[1.380s] Installed /workspace/build/robot_bringup
+[1.380s] running symlink_data
+[1.380s] creating /workspace/install/robot_bringup/share
+[1.381s] creating /workspace/install/robot_bringup/share/ament_index
+[1.381s] creating /workspace/install/robot_bringup/share/ament_index/resource_index
+[1.381s] creating /workspace/install/robot_bringup/share/ament_index/resource_index/packages
+[1.384s] symbolically linking /workspace/build/robot_bringup/resource/robot_bringup -> /workspace/install/robot_bringup/share/ament_index/resource_index/packages
+[1.385s] creating /workspace/install/robot_bringup/share/robot_bringup
+[1.385s] symbolically linking /workspace/build/robot_bringup/package.xml -> /workspace/install/robot_bringup/share/robot_bringup
+[1.385s] creating /workspace/install/robot_bringup/share/robot_bringup/launch
+[1.385s] symbolically linking /workspace/build/robot_bringup/launch/robot.launch.py -> /workspace/install/robot_bringup/share/robot_bringup/launch
+[1.385s] symbolically linking /workspace/build/robot_bringup/launch/raspberry.launch.py -> /workspace/install/robot_bringup/share/robot_bringup/launch
+[1.385s] creating /workspace/install/robot_bringup/share/robot_bringup/config
+[1.388s] symbolically linking /workspace/build/robot_bringup/config/robot_params.yaml -> /workspace/install/robot_bringup/share/robot_bringup/config
+[1.451s] Invoked command in '/workspace/build/robot_bringup' returned '0': PYTHONPATH=/workspace/build/robot_bringup/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/workspace/install/robot_bringup/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /workspace/build/robot_bringup/build --no-deps symlink_data

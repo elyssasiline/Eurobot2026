@@ -1,0 +1,33 @@
+[1.878s] Invoking command in '/home/elyssa/robot_ws/src/navigation': PYTHONPATH=/home/elyssa/robot_ws/build/navigation/prefix_override:/usr/local/lib/python3.11/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/elyssa/robot_ws/install/navigation/lib/python3.11/site-packages: /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/navigation build --build-base /home/elyssa/robot_ws/build/navigation/build install --record /home/elyssa/robot_ws/build/navigation/install.log --single-version-externally-managed install_data
+[2.239s] running egg_info
+[2.251s] writing ../../build/navigation/navigation.egg-info/PKG-INFO
+[2.252s] writing dependency_links to ../../build/navigation/navigation.egg-info/dependency_links.txt
+[2.253s] writing entry points to ../../build/navigation/navigation.egg-info/entry_points.txt
+[2.253s] writing requirements to ../../build/navigation/navigation.egg-info/requires.txt
+[2.253s] writing top-level names to ../../build/navigation/navigation.egg-info/top_level.txt
+[2.274s] reading manifest file '../../build/navigation/navigation.egg-info/SOURCES.txt'
+[2.275s] writing manifest file '../../build/navigation/navigation.egg-info/SOURCES.txt'
+[2.276s] running build
+[2.276s] running build_py
+[2.276s] copying navigation/obstacle_avoidance_node.py -> /home/elyssa/robot_ws/build/navigation/build/lib/navigation
+[2.278s] running install
+[2.284s] running install_lib
+[2.294s] creating /home/elyssa/robot_ws/install/navigation/lib/python3.11/site-packages/navigation
+[2.294s] copying /home/elyssa/robot_ws/build/navigation/build/lib/navigation/obstacle_avoidance_node.py -> /home/elyssa/robot_ws/install/navigation/lib/python3.11/site-packages/navigation
+[2.294s] copying /home/elyssa/robot_ws/build/navigation/build/lib/navigation/lidar_test.py -> /home/elyssa/robot_ws/install/navigation/lib/python3.11/site-packages/navigation
+[2.295s] copying /home/elyssa/robot_ws/build/navigation/build/lib/navigation/__init__.py -> /home/elyssa/robot_ws/install/navigation/lib/python3.11/site-packages/navigation
+[2.295s] copying /home/elyssa/robot_ws/build/navigation/build/lib/navigation/navigation_node.py -> /home/elyssa/robot_ws/install/navigation/lib/python3.11/site-packages/navigation
+[2.295s] copying /home/elyssa/robot_ws/build/navigation/build/lib/navigation/lidar_node.py -> /home/elyssa/robot_ws/install/navigation/lib/python3.11/site-packages/navigation
+[2.296s] byte-compiling /home/elyssa/robot_ws/install/navigation/lib/python3.11/site-packages/navigation/obstacle_avoidance_node.py to obstacle_avoidance_node.cpython-311.pyc
+[2.297s] byte-compiling /home/elyssa/robot_ws/install/navigation/lib/python3.11/site-packages/navigation/lidar_test.py to lidar_test.cpython-311.pyc
+[2.299s] byte-compiling /home/elyssa/robot_ws/install/navigation/lib/python3.11/site-packages/navigation/__init__.py to __init__.cpython-311.pyc
+[2.299s] byte-compiling /home/elyssa/robot_ws/install/navigation/lib/python3.11/site-packages/navigation/navigation_node.py to navigation_node.cpython-311.pyc
+[2.299s] byte-compiling /home/elyssa/robot_ws/install/navigation/lib/python3.11/site-packages/navigation/lidar_node.py to lidar_node.cpython-311.pyc
+[2.300s] running install_data
+[2.300s] copying launch/lidar_avoidance.launch.py -> /home/elyssa/robot_ws/install/navigation/share/navigation/launch
+[2.300s] running install_egg_info
+[2.312s] Copying ../../build/navigation/navigation.egg-info to /home/elyssa/robot_ws/install/navigation/lib/python3.11/site-packages/navigation-0.1.0-py3.11.egg-info
+[2.314s] running install_scripts
+[2.365s] Installing lidar_test script to /home/elyssa/robot_ws/install/navigation/bin
+[2.366s] Installing obstacle_avoidance_node script to /home/elyssa/robot_ws/install/navigation/bin
+[2.366s] writing list of installed files to '/home/elyssa/robot_ws/build/navigation/install.log'

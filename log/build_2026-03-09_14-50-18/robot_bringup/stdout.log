@@ -1,0 +1,7 @@
+running egg_info
+creating ../../build/robot_bringup/robot_bringup.egg-info
+writing ../../build/robot_bringup/robot_bringup.egg-info/PKG-INFO
+writing dependency_links to ../../build/robot_bringup/robot_bringup.egg-info/dependency_links.txt
+writing requirements to ../../build/robot_bringup/robot_bringup.egg-info/requires.txt
+writing top-level names to ../../build/robot_bringup/robot_bringup.egg-info/top_level.txt
+writing manifest file '../../build/robot_bringup/robot_bringup.egg-info/SOURCES.txt'

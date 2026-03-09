@@ -1,0 +1,6 @@
+[0.000000] (-) TimerEvent: {}
+[0.000588] (-) JobUnselected: {'identifier': 'navigation'}
+[0.000639] (-) JobUnselected: {'identifier': 'robot_bringup'}
+[0.000662] (-) JobUnselected: {'identifier': 'robot_msgs'}
+[0.000681] (-) JobUnselected: {'identifier': 'vision'}
+[0.000700] (-) EventReactorShutdown: {}

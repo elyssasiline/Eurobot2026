@@ -1,0 +1,45 @@
+running egg_info
+creating ../../build/vision/vision.egg-info
+writing ../../build/vision/vision.egg-info/PKG-INFO
+writing dependency_links to ../../build/vision/vision.egg-info/dependency_links.txt
+writing entry points to ../../build/vision/vision.egg-info/entry_points.txt
+writing requirements to ../../build/vision/vision.egg-info/requires.txt
+writing top-level names to ../../build/vision/vision.egg-info/top_level.txt
+writing manifest file '../../build/vision/vision.egg-info/SOURCES.txt'
+reading manifest file '../../build/vision/vision.egg-info/SOURCES.txt'
+writing manifest file '../../build/vision/vision.egg-info/SOURCES.txt'
+running build
+running build_py
+creating /home/elyssa/robot_ws/build/vision/build
+creating /home/elyssa/robot_ws/build/vision/build/lib
+creating /home/elyssa/robot_ws/build/vision/build/lib/vision
+copying vision/box_detector_node.py -> /home/elyssa/robot_ws/build/vision/build/lib/vision
+copying vision/aruco_detector_node.py -> /home/elyssa/robot_ws/build/vision/build/lib/vision
+copying vision/__init__.py -> /home/elyssa/robot_ws/build/vision/build/lib/vision
+copying vision/camera_node.py -> /home/elyssa/robot_ws/build/vision/build/lib/vision
+running install
+running install_lib
+creating /home/elyssa/robot_ws/install/vision/lib/python3.11/site-packages/vision
+copying /home/elyssa/robot_ws/build/vision/build/lib/vision/box_detector_node.py -> /home/elyssa/robot_ws/install/vision/lib/python3.11/site-packages/vision
+copying /home/elyssa/robot_ws/build/vision/build/lib/vision/aruco_detector_node.py -> /home/elyssa/robot_ws/install/vision/lib/python3.11/site-packages/vision
+copying /home/elyssa/robot_ws/build/vision/build/lib/vision/__init__.py -> /home/elyssa/robot_ws/install/vision/lib/python3.11/site-packages/vision
+copying /home/elyssa/robot_ws/build/vision/build/lib/vision/camera_node.py -> /home/elyssa/robot_ws/install/vision/lib/python3.11/site-packages/vision
+byte-compiling /home/elyssa/robot_ws/install/vision/lib/python3.11/site-packages/vision/box_detector_node.py to box_detector_node.cpython-311.pyc
+byte-compiling /home/elyssa/robot_ws/install/vision/lib/python3.11/site-packages/vision/aruco_detector_node.py to aruco_detector_node.cpython-311.pyc
+byte-compiling /home/elyssa/robot_ws/install/vision/lib/python3.11/site-packages/vision/__init__.py to __init__.cpython-311.pyc
+byte-compiling /home/elyssa/robot_ws/install/vision/lib/python3.11/site-packages/vision/camera_node.py to camera_node.cpython-311.pyc
+running install_data
+creating /home/elyssa/robot_ws/install/vision/share/ament_index
+creating /home/elyssa/robot_ws/install/vision/share/ament_index/resource_index
+creating /home/elyssa/robot_ws/install/vision/share/ament_index/resource_index/packages
+copying resource/vision -> /home/elyssa/robot_ws/install/vision/share/ament_index/resource_index/packages
+copying package.xml -> /home/elyssa/robot_ws/install/vision/share/vision
+creating /home/elyssa/robot_ws/install/vision/share/vision/launch
+copying launch/aruco_detection.launch.py -> /home/elyssa/robot_ws/install/vision/share/vision/launch
+copying launch/camera.launch.py -> /home/elyssa/robot_ws/install/vision/share/vision/launch
+copying launch/vision_full.launch.py -> /home/elyssa/robot_ws/install/vision/share/vision/launch
+running install_egg_info
+Copying ../../build/vision/vision.egg-info to /home/elyssa/robot_ws/install/vision/lib/python3.11/site-packages/vision-0.1.0-py3.11.egg-info
+running install_scripts
+Installing aruco_detector_node script to /home/elyssa/robot_ws/install/vision/bin
+writing list of installed files to '/home/elyssa/robot_ws/build/vision/install.log'
