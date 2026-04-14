@@ -8,6 +8,7 @@ vision/__init__.py
 vision/aruco_detector_node.py
 vision/box_detector_node.py
 vision/camera_node.py
+vision/pose_estimator.py
 vision.egg-info/PKG-INFO
 vision.egg-info/SOURCES.txt
 vision.egg-info/dependency_links.txt

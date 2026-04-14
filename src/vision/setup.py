@@ -26,6 +26,7 @@ setup(
     entry_points={
         'console_scripts': [
             'aruco_detector_node = vision.aruco_detector_node:main',
+            'box_detector_node = vision.box_detector_node:main',
         ],
     },
 )
