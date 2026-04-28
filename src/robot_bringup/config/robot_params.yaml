@@ -55,7 +55,7 @@ obstacle_avoidance:
 
     # Distances évitement
     min_obstacle_distance: 0.30   # m — déclenchement évitement
-    critical_distance: 0.15       # m — arrêt d'urgence
+    critical_distance: 0.17       # m — arrêt d'urgence
 
     # Angles de surveillance
     front_angle_range: 45.0       # degrés — cône avant
