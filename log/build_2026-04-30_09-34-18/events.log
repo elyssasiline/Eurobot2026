@@ -1,0 +1,37 @@
+[0.000000] (-) TimerEvent: {}
+[0.000685] (-) JobUnselected: {'identifier': 'navigation'}
+[0.000841] (-) JobUnselected: {'identifier': 'robot_bringup'}
+[0.001131] (-) JobUnselected: {'identifier': 'robot_msgs'}
+[0.001185] (-) JobUnselected: {'identifier': 'vision'}
+[0.001263] (strategy) JobQueued: {'identifier': 'strategy', 'dependencies': OrderedDict()}
+[0.001290] (strategy) JobStarted: {'identifier': 'strategy'}
+[0.099684] (-) TimerEvent: {}
+[0.199977] (-) TimerEvent: {}
+[0.300373] (-) TimerEvent: {}
+[0.400778] (-) TimerEvent: {}
+[0.501182] (-) TimerEvent: {}
+[0.601737] (-) TimerEvent: {}
+[0.657436] (strategy) Command: {'cmd': ['/usr/bin/python3', '-W', 'ignore:setup.py install is deprecated', '-W', 'ignore:easy_install command is deprecated', 'setup.py', 'develop', '--editable', '--build-directory', '/workspace/build/strategy/build', '--no-deps', 'symlink_data'], 'cwd': '/workspace/build/strategy', 'env': {'HOSTNAME': 'robot-ros2', 'SHLVL': '1', 'LD_LIBRARY_PATH': '/app/install/camera_ros/lib:/opt/microros_ws/install/micro_ros_agent/lib:/opt/microros_ws/install/micro_ros_msgs/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib:/usr/local/lib/aarch64-linux-gnu:/usr/local/lib', 'HOME': '/home/rosuser', 'OLDPWD': '/workspace/src', 'PYTHONUNBUFFERED': '1', 'ROS_PYTHON_VERSION': '3', 'COLCON_PREFIX_PATH': '/workspace/install:/app/install:/opt/microros_ws/install', 'ROS_DISTRO': 'humble', '_': '/usr/bin/colcon', 'ROS_VERSION': '2', 'TERM': 'xterm', 'ROS_LOCALHOST_ONLY': '0', 'QT_X11_NO_MITSHM': '1', 'PATH': '/workspace/install/vision/bin:/workspace/install/navigation/bin:/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin', 'DISPLAY': ':0', 'LANG': 'en_US.UTF-8', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:', 'ROS_DOMAIN_ID': '0', 'AMENT_PREFIX_PATH': '/workspace/install/robot_bringup:/workspace/install/vision:/workspace/install/navigation:/app/install/camera_ros:/opt/microros_ws/install/micro_ros_agent:/opt/microros_ws/install/micro_ros_msgs:/opt/ros/humble', 'DEBIAN_FRONTEND': 'noninteractive', 'PWD': '/workspace/build/strategy', 'LC_ALL': 'en_US.UTF-8', 'PYTHONPATH': '/workspace/build/strategy/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/workspace/install/strategy/lib/python3.10/site-packages:/workspace/build/robot_bringup:/workspace/install/robot_bringup/lib/python3.10/site-packages:/workspace/build/vision:/workspace/install/vision/lib/python3.10/site-packages:/workspace/build/navigation:/workspace/install/navigation/lib/python3.10/site-packages:/opt/microros_ws/install/micro_ros_msgs/local/lib/python3.10/dist-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages', 'COLCON': '1', 'CMAKE_PREFIX_PATH': '/app/install/camera_ros:/opt/microros_ws/install/micro_ros_agent:/opt/microros_ws/install/micro_ros_msgs'}, 'shell': False}
+[0.701827] (-) TimerEvent: {}
+[0.802169] (-) TimerEvent: {}
+[0.902469] (-) TimerEvent: {}
+[0.904103] (strategy) StdoutLine: {'line': b'running develop\n'}
+[1.002562] (-) TimerEvent: {}
+[1.005385] (strategy) StdoutLine: {'line': b'running egg_info\n'}
+[1.005635] (strategy) StdoutLine: {'line': b'writing strategy.egg-info/PKG-INFO\n'}
+[1.005969] (strategy) StdoutLine: {'line': b'writing dependency_links to strategy.egg-info/dependency_links.txt\n'}
+[1.006171] (strategy) StdoutLine: {'line': b'writing entry points to strategy.egg-info/entry_points.txt\n'}
+[1.006310] (strategy) StdoutLine: {'line': b'writing requirements to strategy.egg-info/requires.txt\n'}
+[1.006405] (strategy) StdoutLine: {'line': b'writing top-level names to strategy.egg-info/top_level.txt\n'}
+[1.008565] (strategy) StdoutLine: {'line': b"reading manifest file 'strategy.egg-info/SOURCES.txt'\n"}
+[1.009613] (strategy) StdoutLine: {'line': b"writing manifest file 'strategy.egg-info/SOURCES.txt'\n"}
+[1.011578] (strategy) StdoutLine: {'line': b'running build_ext\n'}
+[1.011879] (strategy) StdoutLine: {'line': b'Creating /workspace/install/strategy/lib/python3.10/site-packages/strategy.egg-link (link to .)\n'}
+[1.013023] (strategy) StdoutLine: {'line': b'Installing mission_node script to /workspace/install/strategy/bin\n'}
+[1.013326] (strategy) StdoutLine: {'line': b'\n'}
+[1.013424] (strategy) StdoutLine: {'line': b'Installed /workspace/build/strategy\n'}
+[1.013488] (strategy) StdoutLine: {'line': b'running symlink_data\n'}
+[1.013620] (strategy) StderrLine: {'line': b"error: can't copy '/workspace/build/strategy/resource/strategy': doesn't exist or not a regular file\n"}
+[1.066403] (strategy) CommandEnded: {'returncode': 1}
+[1.066805] (strategy) JobEnded: {'identifier': 'strategy', 'rc': 1}
+[1.077019] (-) EventReactorShutdown: {}

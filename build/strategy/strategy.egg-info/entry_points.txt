@@ -1,0 +1,3 @@
+[console_scripts]
+mission_node = strategy.state_machine_node:main
+

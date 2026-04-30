@@ -1,0 +1,20 @@
+running develop
+running egg_info
+writing strategy.egg-info/PKG-INFO
+writing dependency_links to strategy.egg-info/dependency_links.txt
+writing entry points to strategy.egg-info/entry_points.txt
+writing requirements to strategy.egg-info/requires.txt
+writing top-level names to strategy.egg-info/top_level.txt
+reading manifest file 'strategy.egg-info/SOURCES.txt'
+writing manifest file 'strategy.egg-info/SOURCES.txt'
+running build_ext
+Creating /workspace/install/strategy/lib/python3.10/site-packages/strategy.egg-link (link to .)
+Installing mission_node script to /workspace/install/strategy/bin
+
+Installed /workspace/build/strategy
+running symlink_data
+symbolically linking /workspace/build/strategy/resource/strategy -> /workspace/install/strategy/share/ament_index/resource_index/packages
+creating /workspace/install/strategy/share/strategy
+symbolically linking /workspace/build/strategy/package.xml -> /workspace/install/strategy/share/strategy
+creating /workspace/install/strategy/share/strategy/launch
+symbolically linking /workspace/build/strategy/launch/strategy.launch.py -> /workspace/install/strategy/share/strategy/launch

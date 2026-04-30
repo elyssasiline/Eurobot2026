@@ -48,7 +48,7 @@ def generate_launch_description():
     # ----------------------------------------------------------
     navigation_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
-            os.path.join(nav_dir, 'launch', 'lidar.launch.py')
+            os.path.join(nav_dir, 'launch', 'lidar_avoidance.launch.py')
         ),
         launch_arguments={
             'config': config_file,
