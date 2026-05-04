@@ -1,5 +1,12 @@
 package.xml
 setup.py
+../../build/strategy/strategy.egg-info/PKG-INFO
+../../build/strategy/strategy.egg-info/SOURCES.txt
+../../build/strategy/strategy.egg-info/dependency_links.txt
+../../build/strategy/strategy.egg-info/entry_points.txt
+../../build/strategy/strategy.egg-info/requires.txt
+../../build/strategy/strategy.egg-info/top_level.txt
+../../build/strategy/strategy.egg-info/zip-safe
 launch/strategy.launch.py
 resource/strategy
 strategy/__init__.py

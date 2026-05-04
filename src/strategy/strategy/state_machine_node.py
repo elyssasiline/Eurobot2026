@@ -27,7 +27,7 @@ Topics abonnés :
   /gripper/status            (std_msgs/String)        — état pince [STUB camarade]
 
 Topics publiés :
-  /cmd_vel                   (geometry_msgs/Twist)    — commandes moteurs
+  /cmd_vel_raw               (geometry_msgs/Twist)    — commandes moteurs
   /gripper/command           (std_msgs/String)        — OPEN / CLOSE / FLIP [STUB]
   /strategy/state            (std_msgs/String)        — état courant (debug)
   /strategy/score            (std_msgs/Int32)         — score estimé
@@ -137,7 +137,7 @@ class StateMachineNode(Node):
         # ------------------------------------------------------------------
         # Publishers
         # ------------------------------------------------------------------
-        self.cmd_pub      = self.create_publisher(Twist,  '/cmd_vel',          10)
+        self.cmd_pub      = self.create_publisher(Twist,  '/cmd_vel_raw',      10)
         self.gripper_pub  = self.create_publisher(String, '/gripper/command',  10)
         self.state_pub    = self.create_publisher(String, '/strategy/state',   10)
         self.score_pub    = self.create_publisher(Int32,  '/strategy/score',   10)
@@ -178,21 +178,12 @@ class StateMachineNode(Node):
         Gestion de l'interruption obstacle.
         AVOID prend la main sur n'importe quel état actif (sauf INIT/STOP/AVOID lui-même).
         """
+        prev = self.obstacle_status
         self.obstacle_status = msg.data
-
-        if msg.data == 'DANGER' and self.state not in (State.INIT, State.STOP, State.AVOID):
-            self.get_logger().warn('🚨 DANGER — passage en AVOID')
-            self._stop_motors()
-            self.prev_state = self.state
-            self._transition(State.AVOID)
-
-        elif msg.data == 'WARNING' and self.state not in (State.INIT, State.STOP, State.AVOID):
-            # WARNING : on ralentit mais on ne stoppe pas encore
-            self.get_logger().warn('⚠️  WARNING obstacle — ralentissement')
-
-        elif msg.data == 'OK' and self.state == State.AVOID:
-            self.get_logger().info('✅ Obstacle dégagé — reprise état précédent')
-            self._transition(self.prev_state)
+        if msg.data == 'DANGER':
+            self.get_logger().warn('🚨 DANGER signalé')
+        elif msg.data == 'OK' and prev == 'DANGER':
+            self.get_logger().info('✅ Obstacle dégagé')
 
     def _cb_odom(self, msg: Odometry):
         self.odom_x     = msg.pose.pose.position.x
@@ -219,7 +210,16 @@ class StateMachineNode(Node):
                 self._stop_motors()
                 self._transition(State.STOP)
                 return
+                
+        # Dans _spin_once, avant le dispatch :
+        if (self.obstacle_status == 'DANGER'
+                and self.state not in (State.INIT, State.STOP, State.AVOID)):
+            self.prev_state = self.state
+            self._transition(State.AVOID)
 
+        elif (self.obstacle_status == 'OK'
+                and self.state == State.AVOID):
+            self._transition(self.prev_state)
         # Dispatch selon état courant
         {
             State.INIT:          self._run_init,

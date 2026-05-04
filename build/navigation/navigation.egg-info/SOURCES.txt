@@ -11,14 +11,6 @@ launch/lidar_avoidance.launch.py
 launch/navigation_full.launch.py
 navigation/__init__.py
 navigation/lidar_node.py
-navigation/lidar_test.py
 navigation/navigation_node.py
 navigation/obstacle_avoidance_node.py
-navigation.egg-info/PKG-INFO
-navigation.egg-info/SOURCES.txt
-navigation.egg-info/dependency_links.txt
-navigation.egg-info/entry_points.txt
-navigation.egg-info/requires.txt
-navigation.egg-info/top_level.txt
-navigation.egg-info/zip-safe
 resource/navigation

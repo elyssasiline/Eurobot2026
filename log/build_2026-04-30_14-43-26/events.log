@@ -1,0 +1,42 @@
+[0.000000] (-) TimerEvent: {}
+[0.000625] (-) JobUnselected: {'identifier': 'navigation'}
+[0.000831] (-) JobUnselected: {'identifier': 'robot_bringup'}
+[0.000855] (-) JobUnselected: {'identifier': 'robot_msgs'}
+[0.001037] (-) JobUnselected: {'identifier': 'vision'}
+[0.001061] (strategy) JobQueued: {'identifier': 'strategy', 'dependencies': OrderedDict()}
+[0.001114] (strategy) JobStarted: {'identifier': 'strategy'}
+[0.099731] (-) TimerEvent: {}
+[0.200052] (-) TimerEvent: {}
+[0.301251] (-) TimerEvent: {}
+[0.401892] (-) TimerEvent: {}
+[0.502198] (-) TimerEvent: {}
+[0.602489] (-) TimerEvent: {}
+[0.672995] (strategy) Command: {'cmd': ['/usr/bin/python3', '-W', 'ignore:setup.py install is deprecated', '-W', 'ignore:easy_install command is deprecated', 'setup.py', 'egg_info', '--egg-base', '../../build/strategy', 'build', '--build-base', '/workspace/build/strategy/build', 'install', '--record', '/workspace/build/strategy/install.log', '--single-version-externally-managed', 'install_data'], 'cwd': '/workspace/src/strategy', 'env': {'HOSTNAME': 'robot-ros2', 'SHLVL': '1', 'LD_LIBRARY_PATH': '/app/install/camera_ros/lib:/opt/microros_ws/install/micro_ros_agent/lib:/opt/microros_ws/install/micro_ros_msgs/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib:/usr/local/lib/aarch64-linux-gnu:/usr/local/lib', 'HOME': '/home/rosuser', 'PYTHONUNBUFFERED': '1', 'ROS_PYTHON_VERSION': '3', 'COLCON_PREFIX_PATH': '/workspace/install:/app/install:/opt/microros_ws/install', 'ROS_DISTRO': 'humble', '_': '/usr/bin/colcon', 'ROS_VERSION': '2', 'TERM': 'xterm', 'ROS_LOCALHOST_ONLY': '0', 'QT_X11_NO_MITSHM': '1', 'PATH': '/workspace/install/vision/bin:/workspace/install/strategy/bin:/workspace/install/navigation/bin:/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin', 'DISPLAY': ':0', 'LANG': 'en_US.UTF-8', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:', 'ROS_DOMAIN_ID': '0', 'AMENT_PREFIX_PATH': '/workspace/install/robot_bringup:/workspace/install/vision:/workspace/install/strategy:/workspace/install/navigation:/app/install/camera_ros:/opt/microros_ws/install/micro_ros_agent:/opt/microros_ws/install/micro_ros_msgs:/opt/ros/humble', 'DEBIAN_FRONTEND': 'noninteractive', 'PWD': '/workspace/build/strategy', 'LC_ALL': 'en_US.UTF-8', 'PYTHONPATH': '/workspace/build/strategy/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/workspace/install/strategy/lib/python3.10/site-packages:/workspace/build/robot_bringup:/workspace/install/robot_bringup/lib/python3.10/site-packages:/workspace/build/vision:/workspace/install/vision/lib/python3.10/site-packages:/workspace/build/strategy:/workspace/install/strategy/lib/python3.10/site-packages:/workspace/build/navigation:/workspace/install/navigation/lib/python3.10/site-packages:/opt/microros_ws/install/micro_ros_msgs/local/lib/python3.10/dist-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages', 'COLCON': '1', 'CMAKE_PREFIX_PATH': '/app/install/camera_ros:/opt/microros_ws/install/micro_ros_agent:/opt/microros_ws/install/micro_ros_msgs'}, 'shell': False}
+[0.702577] (-) TimerEvent: {}
+[0.802945] (-) TimerEvent: {}
+[0.897000] (strategy) StdoutLine: {'line': b'running egg_info\n'}
+[0.897971] (strategy) StdoutLine: {'line': b'writing ../../build/strategy/strategy.egg-info/PKG-INFO\n'}
+[0.898295] (strategy) StdoutLine: {'line': b'writing dependency_links to ../../build/strategy/strategy.egg-info/dependency_links.txt\n'}
+[0.898842] (strategy) StdoutLine: {'line': b'writing entry points to ../../build/strategy/strategy.egg-info/entry_points.txt\n'}
+[0.899110] (strategy) StdoutLine: {'line': b'writing requirements to ../../build/strategy/strategy.egg-info/requires.txt\n'}
+[0.899369] (strategy) StdoutLine: {'line': b'writing top-level names to ../../build/strategy/strategy.egg-info/top_level.txt\n'}
+[0.900597] (strategy) StdoutLine: {'line': b"reading manifest file '../../build/strategy/strategy.egg-info/SOURCES.txt'\n"}
+[0.901782] (strategy) StdoutLine: {'line': b"writing manifest file '../../build/strategy/strategy.egg-info/SOURCES.txt'\n"}
+[0.902092] (strategy) StdoutLine: {'line': b'running build\n'}
+[0.902349] (strategy) StdoutLine: {'line': b'running build_py\n'}
+[0.902662] (strategy) StdoutLine: {'line': b'copying strategy/state_machine_node.py -> /workspace/build/strategy/build/lib/strategy\n'}
+[0.902931] (strategy) StdoutLine: {'line': b'running install\n'}
+[0.903157] (-) TimerEvent: {}
+[0.903351] (strategy) StdoutLine: {'line': b'running install_lib\n'}
+[0.903840] (strategy) StdoutLine: {'line': b'copying /workspace/build/strategy/build/lib/strategy/state_machine_node.py -> /workspace/install/strategy/lib/python3.10/site-packages/strategy\n'}
+[0.904783] (strategy) StdoutLine: {'line': b'byte-compiling /workspace/install/strategy/lib/python3.10/site-packages/strategy/state_machine_node.py to state_machine_node.cpython-310.pyc\n'}
+[0.907513] (strategy) StdoutLine: {'line': b'running install_data\n'}
+[0.908014] (strategy) StdoutLine: {'line': b'running install_egg_info\n'}
+[0.911843] (strategy) StdoutLine: {'line': b"removing '/workspace/install/strategy/lib/python3.10/site-packages/strategy-0.1.0-py3.10.egg-info' (and everything under it)\n"}
+[0.912301] (strategy) StdoutLine: {'line': b'Copying ../../build/strategy/strategy.egg-info to /workspace/install/strategy/lib/python3.10/site-packages/strategy-0.1.0-py3.10.egg-info\n'}
+[0.912910] (strategy) StdoutLine: {'line': b'running install_scripts\n'}
+[0.936771] (strategy) StdoutLine: {'line': b'Installing mission_node script to /workspace/install/strategy/bin\n'}
+[0.937360] (strategy) StdoutLine: {'line': b"writing list of installed files to '/workspace/build/strategy/install.log'\n"}
+[0.985663] (strategy) CommandEnded: {'returncode': 0}
+[1.001208] (strategy) JobEnded: {'identifier': 'strategy', 'rc': 0}
+[1.002341] (-) EventReactorShutdown: {}

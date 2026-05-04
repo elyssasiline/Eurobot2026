@@ -55,7 +55,9 @@ obstacle_avoidance:
 
     # Distances évitement
     min_obstacle_distance: 0.30   # m — déclenchement évitement
-    critical_distance: 0.17       # m — arrêt d'urgence
+    critical_distance: 0.20      # m — arrêt d'urgence
+    slow_start_distance: 0.40
+    approach_speed_threshold: 0.02
 
     # Angles de surveillance
     front_angle_range: 45.0       # degrés — cône avant
@@ -67,6 +69,16 @@ obstacle_avoidance:
 
     # Activation
     enable_avoidance: true
+
+    robot.team: 'blue'
+    navigation.critical_distance: 0.20
+    navigation.slow_start_distance: 0.40
+    navigation.front_angle_range: 45.0
+    navigation.side_angle_range: 90.0
+    navigation.max_linear_speed: 0.30
+    navigation.max_angular_speed: 1.00
+    navigation.enable_avoidance: true
+    navigation.approach_speed_threshold: 0.02
 
 # ------------------------------------------------------------
 # NODE : rplidar  (package rplidar_ros)

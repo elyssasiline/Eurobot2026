@@ -151,7 +151,7 @@ class LidarTestNode(Node):
                 x_m = r_m * math.sin(rad)
                 y_m = r_m * math.cos(rad)
                 gx  = int(cx - x_m * (cx / self.MAX_DIST))
-                gy  = int(cy + y_m * (cy / self.MAX_DIST))
+                gy  = int(cy - y_m * (cy / self.MAX_DIST))
                 if 0 <= gx < W and 0 <= gy < H:
                     if grid[gy][gx] == ' ':
                         grid[gy][gx] = '·'
@@ -168,7 +168,7 @@ class LidarTestNode(Node):
             rad = math.radians(angle_deg)
             x_m = dist * math.sin(rad)
             y_m = dist * math.cos(rad)
-            gx  = int(cx + x_m * (cx / self.MAX_DIST))
+            gx = int(cx - x_m * (cx / self.MAX_DIST))
             gy  = int(cy - y_m * (cy / self.MAX_DIST))
             if 0 <= gx < W and 0 <= gy < H:
                 grid[gy][gx] = '█'
@@ -178,7 +178,7 @@ class LidarTestNode(Node):
             rad = math.radians(deg)
             for step in range(1, cy):
                 gx = int(cx - math.sin(rad) * step)
-                gy = int(cy + math.cos(rad) * step)
+                gy = int(cy - math.cos(rad) * step)
                 if 0 <= gx < W and 0 <= gy < H and grid[gy][gx] == ' ':
                     grid[gy][gx] = '░'
 

@@ -1,0 +1,18 @@
+[1.202s] Invoking command in '/workspace/build/navigation': PYTHONPATH=/workspace/build/navigation/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/workspace/install/navigation/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /workspace/build/navigation/build --no-deps symlink_data
+[1.469s] running develop
+[1.572s] running egg_info
+[1.572s] writing navigation.egg-info/PKG-INFO
+[1.572s] writing dependency_links to navigation.egg-info/dependency_links.txt
+[1.572s] writing entry points to navigation.egg-info/entry_points.txt
+[1.573s] writing requirements to navigation.egg-info/requires.txt
+[1.573s] writing top-level names to navigation.egg-info/top_level.txt
+[1.575s] reading manifest file 'navigation.egg-info/SOURCES.txt'
+[1.576s] writing manifest file 'navigation.egg-info/SOURCES.txt'
+[1.578s] running build_ext
+[1.578s] Creating /workspace/install/navigation/lib/python3.10/site-packages/navigation.egg-link (link to .)
+[1.580s] Installing lidar_test script to /workspace/install/navigation/bin
+[1.580s] Installing obstacle_avoidance_node script to /workspace/install/navigation/bin
+[1.580s] 
+[1.580s] Installed /workspace/build/navigation
+[1.580s] running symlink_data
+[1.646s] Invoked command in '/workspace/build/navigation' returned '0': PYTHONPATH=/workspace/build/navigation/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/workspace/install/navigation/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /workspace/build/navigation/build --no-deps symlink_data

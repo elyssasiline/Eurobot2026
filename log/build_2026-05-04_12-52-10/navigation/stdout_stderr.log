@@ -1,0 +1,30 @@
+running develop
+Removing /workspace/install/navigation/lib/python3.10/site-packages/navigation.egg-link (link to .)
+running egg_info
+writing ../../build/navigation/navigation.egg-info/PKG-INFO
+writing dependency_links to ../../build/navigation/navigation.egg-info/dependency_links.txt
+writing entry points to ../../build/navigation/navigation.egg-info/entry_points.txt
+writing requirements to ../../build/navigation/navigation.egg-info/requires.txt
+writing top-level names to ../../build/navigation/navigation.egg-info/top_level.txt
+reading manifest file '../../build/navigation/navigation.egg-info/SOURCES.txt'
+writing manifest file '../../build/navigation/navigation.egg-info/SOURCES.txt'
+running build
+running build_py
+copying navigation/obstacle_avoidance_node.py -> /workspace/build/navigation/build/lib/navigation
+running install
+running install_lib
+copying /workspace/build/navigation/build/lib/navigation/obstacle_avoidance_node.py -> /workspace/install/navigation/lib/python3.10/site-packages/navigation
+byte-compiling /workspace/install/navigation/lib/python3.10/site-packages/navigation/obstacle_avoidance_node.py to obstacle_avoidance_node.cpython-310.pyc
+Sorry: IndentationError: expected an indented block after 'else' statement on line 153 (obstacle_avoidance_node.py, line 154)
+running install_data
+copying resource/navigation -> /workspace/install/navigation/share/ament_index/resource_index/packages
+copying package.xml -> /workspace/install/navigation/share/navigation
+copying launch/navigation_full.launch.py -> /workspace/install/navigation/share/navigation/launch
+copying launch/lidar_avoidance.launch.py -> /workspace/install/navigation/share/navigation/launch
+running install_egg_info
+removing '/workspace/install/navigation/lib/python3.10/site-packages/navigation-0.1.0-py3.10.egg-info' (and everything under it)
+Copying ../../build/navigation/navigation.egg-info to /workspace/install/navigation/lib/python3.10/site-packages/navigation-0.1.0-py3.10.egg-info
+running install_scripts
+Installing lidar_test script to /workspace/install/navigation/bin
+Installing obstacle_avoidance_node script to /workspace/install/navigation/bin
+writing list of installed files to '/workspace/build/navigation/install.log'

@@ -1,0 +1,20 @@
+[1.191s] Invoking command in '/workspace/build/strategy': PYTHONPATH=/workspace/build/strategy/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/workspace/install/strategy/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /workspace/build/strategy/build --no-deps symlink_data --force
+[1.482s] running develop
+[1.597s] running egg_info
+[1.598s] writing strategy.egg-info/PKG-INFO
+[1.598s] writing dependency_links to strategy.egg-info/dependency_links.txt
+[1.598s] writing entry points to strategy.egg-info/entry_points.txt
+[1.599s] writing requirements to strategy.egg-info/requires.txt
+[1.599s] writing top-level names to strategy.egg-info/top_level.txt
+[1.602s] reading manifest file 'strategy.egg-info/SOURCES.txt'
+[1.604s] writing manifest file 'strategy.egg-info/SOURCES.txt'
+[1.607s] running build_ext
+[1.608s] Creating /workspace/install/strategy/lib/python3.10/site-packages/strategy.egg-link (link to .)
+[1.609s] Installing mission_node script to /workspace/install/strategy/bin
+[1.610s] 
+[1.610s] Installed /workspace/build/strategy
+[1.611s] running symlink_data
+[1.611s] symbolically linking /workspace/build/strategy/resource/strategy -> /workspace/install/strategy/share/ament_index/resource_index/packages
+[1.611s] symbolically linking /workspace/build/strategy/package.xml -> /workspace/install/strategy/share/strategy
+[1.611s] symbolically linking /workspace/build/strategy/launch/strategy.launch.py -> /workspace/install/strategy/share/strategy/launch
+[1.673s] Invoked command in '/workspace/build/strategy' returned '0': PYTHONPATH=/workspace/build/strategy/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/workspace/install/strategy/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /workspace/build/strategy/build --no-deps symlink_data --force

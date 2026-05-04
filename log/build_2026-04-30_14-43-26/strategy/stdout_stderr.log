@@ -1,0 +1,22 @@
+running egg_info
+writing ../../build/strategy/strategy.egg-info/PKG-INFO
+writing dependency_links to ../../build/strategy/strategy.egg-info/dependency_links.txt
+writing entry points to ../../build/strategy/strategy.egg-info/entry_points.txt
+writing requirements to ../../build/strategy/strategy.egg-info/requires.txt
+writing top-level names to ../../build/strategy/strategy.egg-info/top_level.txt
+reading manifest file '../../build/strategy/strategy.egg-info/SOURCES.txt'
+writing manifest file '../../build/strategy/strategy.egg-info/SOURCES.txt'
+running build
+running build_py
+copying strategy/state_machine_node.py -> /workspace/build/strategy/build/lib/strategy
+running install
+running install_lib
+copying /workspace/build/strategy/build/lib/strategy/state_machine_node.py -> /workspace/install/strategy/lib/python3.10/site-packages/strategy
+byte-compiling /workspace/install/strategy/lib/python3.10/site-packages/strategy/state_machine_node.py to state_machine_node.cpython-310.pyc
+running install_data
+running install_egg_info
+removing '/workspace/install/strategy/lib/python3.10/site-packages/strategy-0.1.0-py3.10.egg-info' (and everything under it)
+Copying ../../build/strategy/strategy.egg-info to /workspace/install/strategy/lib/python3.10/site-packages/strategy-0.1.0-py3.10.egg-info
+running install_scripts
+Installing mission_node script to /workspace/install/strategy/bin
+writing list of installed files to '/workspace/build/strategy/install.log'
