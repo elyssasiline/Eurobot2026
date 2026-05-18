@@ -31,6 +31,14 @@ Les deux couches communiquent par le bridge micro-ROS en USB/Serial.
 
 L'environnement ROS2 tourne dans un container basé sur `arm64v8/ros:humble`.
 
+| Fichier | Rôle |
+|---|---|
+| `Dockerfile.raspberry` | Image principale ROS2 pour le Raspberry Pi 5 |
+| `Dockerfile.teensy` | Image pour le build firmware Teensy |
+| `docker-compose.yaml` | Orchestration des containers |
+| `entrypoint.sh` | Point d'entrée du container |
+| `build.sh` / `start.sh` / `stop.sh` | Scripts de gestion du cycle de vie |
+
 Couches ajoutées à l'image de base :
 
 | Composant | Mode d'installation |
@@ -50,15 +58,17 @@ Le container est configuré avec `privileged: true` et `network_mode: host` pour
 
 Un utilisateur non-root `rosuser` (groupes `dialout` et `video`) est créé pour l'accès aux périphériques.
 
+---
+
 ### Organisation du workspace (`src/`)
 
-| Package | Node principal | Rôle |
+| Package | Nodes | Rôle |
 |---|---|---|
-| `navigation` | `obstacle_avoidance_node` | Évitement d'obstacles |
-| `vision` | `aruco_detector_node`, `box_detector_node` | Détection ArUco et caisses |
-| `strategy` | `mission_node` | Machine à états principale |
+| `communication` | `wifi_bridge_node`, `fleet_manager_node` | Pont WiFi vers les PAMIs |
+| `navigation` | `obstacle_avoidance_node`, `navigation_node`, `lidar_node` | Évitement d'obstacles |
 | `robot_bringup` | — | Config YAML centrale + launch global |
-| `communication` | `wifi_bridge_node` | Pont WiFi vers les PAMIs |
+| `strategy` | `state_machine_node`, `mission_planner_node` | Machine à états principale |
+| `vision` | `aruco_detector_node`, `box_detector_node`, `camera_node`, `pose_estimator` | Détection ArUco et caisses |
 
 ### Configuration centrale (`robot_params.yaml`)
 
@@ -72,11 +82,16 @@ ros2 launch robot_bringup robot.launch.py team:=yellow
 
 Il est propagé à l'ensemble des nodes par le launch file, sans édition manuelle du YAML.
 
+Les configs spécifiques à la vision sont dans `src/vision/config/` :
+- `aruco_params.yaml` — paramètres de détection ArUco
+- `box_detection_params.yaml` — paramètres de détection des caisses
+- `camera_params.yaml` — calibration caméra
+
 ---
 
 ## Nodes ROS2 — Raspberry Pi
 
-### `aruco_detector_node` (vision)
+### `aruco_detector_node.py` (vision)
 
 Gère la chaîne complète de vision par ordinateur.
 
@@ -99,7 +114,7 @@ Les patterns ArUco sont définis manuellement en grille 6×6 pour chaque couleur
 
 ---
 
-### `obstacle_avoidance_node` (navigation)
+### `obstacle_avoidance_node.py` (navigation)
 
 S'intercale entre la state machine et les moteurs.
 
@@ -117,7 +132,7 @@ La condition `SLOWING` ne se déclenche que si l'obstacle se rapproche, pour év
 
 ---
 
-### `mission_node` (strategy)
+### `state_machine_node.py` (strategy)
 
 Cœur décisionnel du robot. Tourne à 20 Hz. Implémente une machine à **8 états**.
 
@@ -159,6 +174,20 @@ Chaque Teensy dispose de deux environnements PlatformIO :
 
 ### Teensy 1 — Moteurs et encodeurs (`teensy_firmware/`)
 
+```
+teensy_firmware/
+├── src/
+│   ├── main.cpp           # Cycle de vie micro-ROS + exécuteur
+│   ├── motor_node.cpp     # Cinématique Mecanum + driver VNH5019
+│   ├── encoder_node.cpp   # Lecture encodeurs + odométrie
+│   └── sensor_node.cpp    # Ultrasons + batterie (partiel)
+├── lib/
+│   ├── motor_driver/      # Abstraction driver moteur
+│   └── encoders/          # Abstraction encodeurs quadrature
+└── test/
+    └── diagnostic.cpp     # Interface série interactive sans micro-ROS
+```
+
 **Cinématique Mecanum 45° :**
 
 ```
@@ -187,7 +216,17 @@ Encodeurs quadrature lus par interruptions (mode `CHANGE` sur 8 broches), ISR ma
 
 ### Teensy 2 — Capteurs IR et pince (`teensy_firmware2/`)
 
-**`ir_node`** : lit les capteurs IR (actifs LOW, ligne noire = LOW), publie un bitmask `std_msgs/UInt8` sur `/ir_line` à 100 ms.
+```
+teensy_firmware2/
+├── src/
+│   └── main.cpp           # Cycle de vie micro-ROS + ir_node + gripper_node
+├── include/
+│   └── ir_config.h        # Pinout et seuils capteurs IR
+└── test/
+    └── ir_diag.cpp        # Validation capteurs IR sans micro-ROS
+```
+
+**`ir_node`** : lit les capteurs IR (actifs LOW, ligne noire = LOW), publie un bitmask `std_msgs/UInt8` sur `/ir_line` toutes les 100 ms.
 
 - Ligne centrée → avance droit
 - Ligne décentrée → correction angulaire
@@ -212,18 +251,17 @@ Le top départ est géré par la corde de lancement qui publie `std_msgs/Bool = 
 
 ## Outils de diagnostic
 
-### `tools/lidar_test.py`
+### `tools/testing/`
 
-Monitor temps réel à 10 Hz :
-- Distances minimales par secteur avec barres colorées
-- Statut `OK` / `SLOWING` / `DANGER`
-- Commandes `/cmd_vel` générées
-- Radar ASCII 15×31 en temps réel
-- Statistiques sur les 50 dernières alertes
+| Fichier | Rôle |
+|---|---|
+| `topic_monitor.py` | Surveillance de tous les topics à 4 Hz + injection de messages de test clavier |
+| `lidar_test.py` | Monitor LiDAR temps réel : distances par secteur, radar ASCII 15×31, statistiques alertes |
+| `simulate_mission.py` | Simulation de mission complète sans hardware |
+| `ir_bench_viewer.py` | Visualisation en temps réel des capteurs IR |
+| `test_camera.py` | Test et validation du flux caméra |
 
-### `tools/topic_monitor.py`
-
-Surveillance de l'ensemble des topics à 4 Hz (fraîcheur, dernière valeur, compteur de messages). Injection de messages de test depuis le clavier :
+**Injections disponibles dans `topic_monitor.py` :**
 
 | Touche | Action |
 |---|---|
@@ -232,7 +270,20 @@ Surveillance de l'ensemble des topics à 4 Hz (fraîcheur, dernière valeur, com
 | `k` | ArUco KEEP |
 | `i` | IR centré |
 
-### Diagnostic Teensy (`motors_diag` / `ir_diag`)
+### `tools/calibration/`
+
+| Fichier | Rôle |
+|---|---|
+| `calibrate_camera.py` | Calibration caméra (matrice intrinsèque + distorsion) |
+| `chessboard.png` | Mire de calibration |
+
+### `tools/visualization/`
+
+| Fichier | Rôle |
+|---|---|
+| `viewer_camera.py` | Visualisation du flux caméra en temps réel |
+
+### Diagnostic Teensy (`test/diagnostic.cpp` / `test/ir_diag.cpp`)
 
 Interface série interactive sans micro-ROS.
 
@@ -253,19 +304,19 @@ Commandes disponibles (Teensy 1) :
 
 | Topic | Type | Publisher | Subscriber(s) | Fréquence |
 |---|---|---|---|---|
-| `/start_signal` | `std_msgs/Bool` | corde (GPIO) | `strategy_node` | 1× |
+| `/start_signal` | `std_msgs/Bool` | corde (GPIO) | `state_machine_node` | 1× |
 | `/camera/image_raw` | `sensor_msgs/Image` | `camera_node` | `aruco_detector_node` | 30 Hz |
-| `/aruco/box_to_flip` | `std_msgs/String` | `aruco_detector_node` | `strategy_node` | sur détection |
-| `/scan` | `LaserScan` | `lidar_node` | `avoidance_node` | ~10 Hz |
-| `/obstacle_alert` | `std_msgs/String` | `avoidance_node` | `strategy_node` | ~10 Hz |
-| `/cmd_vel_raw` | `geometry_msgs/Twist` | `strategy_node` | `avoidance_node` | 20 Hz |
-| `/cmd_vel` | `geometry_msgs/Twist` | `avoidance_node` | `motor_node` (T1) | 20 Hz |
-| `/ir_line` | `std_msgs/UInt8` | `ir_node` (T2) | `strategy_node` | 10 Hz |
-| `/wheel_odom` | `nav_msgs/Odometry` | `encoder_node` (T1) | `strategy_node` | 20 Hz |
-| `/gripper/command` | `std_msgs/String` | `strategy_node` | `gripper_node` (T2) | sur action |
-| `/gripper/status` | `std_msgs/String` | `gripper_node` (T2) | `strategy_node` | sur événement |
-| `/strategy/state` | `std_msgs/String` | `strategy_node` | `topic_monitor` | 20 Hz |
-| `/strategy/score` | `std_msgs/Int32` | `strategy_node` | `topic_monitor` | 20 Hz |
+| `/aruco/box_to_flip` | `std_msgs/String` | `aruco_detector_node` | `state_machine_node` | sur détection |
+| `/scan` | `LaserScan` | `lidar_node` | `obstacle_avoidance_node` | ~10 Hz |
+| `/obstacle_alert` | `std_msgs/String` | `obstacle_avoidance_node` | `state_machine_node` | ~10 Hz |
+| `/cmd_vel_raw` | `geometry_msgs/Twist` | `state_machine_node` | `obstacle_avoidance_node` | 20 Hz |
+| `/cmd_vel` | `geometry_msgs/Twist` | `obstacle_avoidance_node` | `motor_node` (T1) | 20 Hz |
+| `/ir_line` | `std_msgs/UInt8` | `ir_node` (T2) | `state_machine_node` | 10 Hz |
+| `/wheel_odom` | `nav_msgs/Odometry` | `encoder_node` (T1) | `state_machine_node` | 20 Hz |
+| `/gripper/command` | `std_msgs/String` | `state_machine_node` | `gripper_node` (T2) | sur action |
+| `/gripper/status` | `std_msgs/String` | `gripper_node` (T2) | `state_machine_node` | sur événement |
+| `/strategy/state` | `std_msgs/String` | `state_machine_node` | `topic_monitor` | 20 Hz |
+| `/strategy/score` | `std_msgs/Int32` | `state_machine_node` | `topic_monitor` | 20 Hz |
 
 ---
 
@@ -287,10 +338,10 @@ Une publication trop fréquente des encodeurs saturait le bridge et provoquait d
 
 | Sous-système | État | Ce qu'il manque |
 |---|---|---|
-| Capteurs ultrasons | Code prêt, `sensorNodeSpin()` commenté | Branchement + test |
+| Capteurs ultrasons | Code prêt dans `sensor_node.cpp`, `sensorNodeSpin()` commenté | Branchement + test |
 | Capteur distance bas | Topic `/vision/nearest_box_distance` souscrit, logique écrite | Branchement + test |
-| Supervision batterie | Code complet dans `sensor_node.cpp` | Branchement + test |
-| Communication WiFi PAMIs | Architecture dans `wifi_bridge_node`, params dans YAML | Configuration ESP32 |
+| Supervision batterie | Code complet dans `sensor_node.cpp` (diviseur résistif + ACS712) | Branchement + test |
+| Communication WiFi PAMIs | Architecture dans `wifi_bridge_node`, params IP/port dans YAML | Configuration ESP32 |
 
 ---
 
@@ -303,4 +354,4 @@ Une publication trop fréquente des encodeurs saturait le bridge et provoquait d
 | **Multi-robot** | `ROS_DOMAIN_ID` permet d'isoler ou faire communiquer plusieurs instances ROS2 ; la coordination PAMIs pourrait migrer vers le graphe ROS2 |
 | **Simulation** | Architecture 100 % topics + paramètres → compatible Gazebo pour valider la stratégie sans hardware |
 
-L'ensemble de la logique métier est isolé dans `mission_node` et `robot_params.yaml`. Une équipe future peut réutiliser toute la base en ne réécrivant que la machine à états et les paramètres de mission.
+L'ensemble de la logique métier est isolé dans `state_machine_node.py` et `robot_params.yaml`. Une équipe future peut réutiliser toute la base en ne réécrivant que la machine à états et les paramètres de mission.
