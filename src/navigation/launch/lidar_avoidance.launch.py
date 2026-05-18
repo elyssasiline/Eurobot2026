@@ -1,5 +1,5 @@
 """
-navigation/launch/lidar.launch.py
+navigation/launch/lidar_avoidance.launch.py
 
 Lance le RPLidar + le node d'évitement d'obstacles.
 Les paramètres viennent du robot_params.yaml de robot_bringup.

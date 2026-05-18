@@ -2,7 +2,9 @@
 robot_bringup/launch/robot.launch.py
 
 Lance l'ensemble du robot :
-  - RPLidar + obstacle avoidance
+  - Micro-ROS agent Teensy moteurs    (/dev/ttyACM0) ✅ testée
+  - Micro-ROS agent Teensy IR + pince (/dev/ttyACM1) ⚠️  pas encore testée
+  - RPLidar + obstacle avoidance      (/dev/ttyUSB0)
   - Caméra + détection ArUco
   - State machine (strategy)
   - Communication WIFI PAMIs
@@ -15,7 +17,11 @@ Usage :
 import os
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
-from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription
+from launch.actions import (
+    DeclareLaunchArgument,
+    IncludeLaunchDescription,
+    TimerAction,
+)
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
@@ -29,13 +35,11 @@ def generate_launch_description():
     bringup_dir = get_package_share_directory('robot_bringup')
     config_file = os.path.join(bringup_dir, 'config', 'robot_params.yaml')
 
-    nav_dir = get_package_share_directory('navigation')
+    nav_dir    = get_package_share_directory('navigation')
     vision_dir = get_package_share_directory('vision')
 
     # ----------------------------------------------------------
-    # Argument team — peut être surchargé en ligne de commande
-    # La valeur par défaut vient du YAML mais on garde l'arg
-    # pour pouvoir faire : ros2 launch ... team:=yellow
+    # Argument team
     # ----------------------------------------------------------
     team_arg = DeclareLaunchArgument(
         'team',
@@ -44,7 +48,29 @@ def generate_launch_description():
     )
 
     # ----------------------------------------------------------
-    # Sous-launch navigation (lidar + obstacle avoidance)
+    # Micro-ROS agent — Teensy moteurs (/dev/ttyACM0) ✅
+    # ----------------------------------------------------------
+    micro_ros_agent_motors = Node(
+        package='micro_ros_agent',
+        executable='micro_ros_agent',
+        name='micro_ros_agent_motors',
+        arguments=['serial', '--dev', '/dev/ttyACM1', '--baudrate', '115200'],
+        output='screen'
+    )
+
+    # ----------------------------------------------------------
+    # Micro-ROS agent — Teensy IR + pince (/dev/ttyACM1) ⚠️
+    # ----------------------------------------------------------
+    micro_ros_agent_ir_gripper = Node(
+        package='micro_ros_agent',
+        executable='micro_ros_agent',
+        name='micro_ros_agent_ir_gripper',
+        arguments=['serial', '--dev', '/dev/ttyACM0', '--baudrate', '115200'],
+        output='screen'
+    )
+
+    # ----------------------------------------------------------
+    # Sous-launch navigation (RPLidar /dev/ttyUSB0 + obstacle avoidance)
     # ----------------------------------------------------------
     navigation_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
@@ -71,16 +97,23 @@ def generate_launch_description():
 
     # ----------------------------------------------------------
     # Node stratégie / state machine
+    # Démarre 3s après les agents micro-ROS pour laisser le temps
+    # aux Teensys de s'enregistrer
     # ----------------------------------------------------------
-    strategy_node = Node(
-        package='strategy',
-        executable='mission_node',
-        name='mission',
-        parameters=[
-            config_file,
-            {'robot.team': LaunchConfiguration('team')},  # surcharge si arg passé
-        ],
-        output='screen'
+    strategy_node = TimerAction(
+        period=3.0,
+        actions=[
+            Node(
+                package='strategy',
+                executable='mission_node',
+                name='mission',
+                parameters=[
+                    config_file,
+                    {'robot.team': LaunchConfiguration('team')},
+                ],
+                output='screen'
+            )
+        ]
     )
 
     # ----------------------------------------------------------
@@ -99,8 +132,10 @@ def generate_launch_description():
 
     return LaunchDescription([
         team_arg,
-        navigation_launch,
-        vision_launch,
-        strategy_node,
-        communication_node,
+        micro_ros_agent_motors,      # Teensy moteurs   — ACM0 ✅
+        micro_ros_agent_ir_gripper,  # Teensy IR+pince  — ACM1 ⚠️
+        navigation_launch,           # RPLidar + obstacle avoidance
+        vision_launch,               # Caméra + ArUco
+        strategy_node,               # State machine (délai 3s)
+        # communication_node,          # WiFi PAMIs
     ])

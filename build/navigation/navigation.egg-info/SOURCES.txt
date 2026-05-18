@@ -13,4 +13,11 @@ navigation/__init__.py
 navigation/lidar_node.py
 navigation/navigation_node.py
 navigation/obstacle_avoidance_node.py
+navigation.egg-info/PKG-INFO
+navigation.egg-info/SOURCES.txt
+navigation.egg-info/dependency_links.txt
+navigation.egg-info/entry_points.txt
+navigation.egg-info/requires.txt
+navigation.egg-info/top_level.txt
+navigation.egg-info/zip-safe
 resource/navigation

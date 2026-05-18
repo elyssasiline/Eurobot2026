@@ -1,0 +1,32 @@
+[0.541s] Invoking command in '/workspace/build/robot_msgs': /usr/bin/cmake /workspace/src/robot_msgs -DCMAKE_INSTALL_PREFIX=/workspace/install/robot_msgs
+[0.711s] [33mCMake Warning (dev) in CMakeLists.txt:
+[0.711s]   No project() command is present.  The top-level CMakeLists.txt file must
+[0.712s]   contain a literal, direct call to the project() command.  Add a line of
+[0.712s]   code such as
+[0.712s] 
+[0.712s]     project(ProjectName)
+[0.712s] 
+[0.712s]   near the top of the file, but after cmake_minimum_required().
+[0.712s] 
+[0.712s]   CMake is pretending there is a "project(Project)" command on the first
+[0.712s]   line.
+[0.712s] This warning is for project developers.  Use -Wno-dev to suppress it.
+[0.712s] [0m
+[1.613s] -- The C compiler identification is GNU 11.4.0
+[1.978s] -- The CXX compiler identification is GNU 11.4.0
+[2.005s] -- Detecting C compiler ABI info
+[2.189s] -- Detecting C compiler ABI info - done
+[2.213s] -- Check for working C compiler: /usr/bin/cc - skipped
+[2.214s] -- Detecting C compile features
+[2.216s] -- Detecting C compile features - done
+[2.225s] -- Detecting CXX compiler ABI info
+[2.400s] -- Detecting CXX compiler ABI info - done
+[2.413s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[2.416s] -- Detecting CXX compile features
+[2.417s] -- Detecting CXX compile features - done
+[2.417s] -- Configuring done
+[2.419s] -- Generating done
+[2.422s] -- Build files have been written to: /workspace/build/robot_msgs
+[2.427s] Invoked command in '/workspace/build/robot_msgs' returned '0': /usr/bin/cmake /workspace/src/robot_msgs -DCMAKE_INSTALL_PREFIX=/workspace/install/robot_msgs
+[2.430s] Invoking command in '/workspace/build/robot_msgs': /usr/bin/cmake --build /workspace/build/robot_msgs -- -j4 -l4
+[2.482s] Invoked command in '/workspace/build/robot_msgs' returned '0': /usr/bin/cmake --build /workspace/build/robot_msgs -- -j4 -l4

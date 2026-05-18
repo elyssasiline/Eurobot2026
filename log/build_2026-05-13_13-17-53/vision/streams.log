@@ -1,0 +1,18 @@
+[1.343s] Invoking command in '/workspace/build/vision': PYTHONPATH=/workspace/build/vision/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/workspace/install/vision/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /workspace/build/vision/build --no-deps symlink_data
+[1.639s] running develop
+[1.746s] running egg_info
+[1.747s] writing vision.egg-info/PKG-INFO
+[1.747s] writing dependency_links to vision.egg-info/dependency_links.txt
+[1.747s] writing entry points to vision.egg-info/entry_points.txt
+[1.748s] writing requirements to vision.egg-info/requires.txt
+[1.748s] writing top-level names to vision.egg-info/top_level.txt
+[1.750s] reading manifest file 'vision.egg-info/SOURCES.txt'
+[1.751s] writing manifest file 'vision.egg-info/SOURCES.txt'
+[1.753s] running build_ext
+[1.754s] Creating /workspace/install/vision/lib/python3.10/site-packages/vision.egg-link (link to .)
+[1.755s] Installing aruco_detector_node script to /workspace/install/vision/bin
+[1.756s] Installing box_detector_node script to /workspace/install/vision/bin
+[1.756s] 
+[1.757s] Installed /workspace/build/vision
+[1.757s] running symlink_data
+[1.847s] Invoked command in '/workspace/build/vision' returned '0': PYTHONPATH=/workspace/build/vision/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/workspace/install/vision/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /workspace/build/vision/build --no-deps symlink_data

@@ -1,0 +1,17 @@
+[1.352s] Invoking command in '/workspace/build/strategy': PYTHONPATH=/workspace/build/strategy/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/workspace/install/strategy/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /workspace/build/strategy/build --no-deps symlink_data
+[1.659s] running develop
+[1.785s] running egg_info
+[1.787s] writing strategy.egg-info/PKG-INFO
+[1.788s] writing dependency_links to strategy.egg-info/dependency_links.txt
+[1.788s] writing entry points to strategy.egg-info/entry_points.txt
+[1.788s] writing requirements to strategy.egg-info/requires.txt
+[1.789s] writing top-level names to strategy.egg-info/top_level.txt
+[1.793s] reading manifest file 'strategy.egg-info/SOURCES.txt'
+[1.794s] writing manifest file 'strategy.egg-info/SOURCES.txt'
+[1.798s] running build_ext
+[1.798s] Creating /workspace/install/strategy/lib/python3.10/site-packages/strategy.egg-link (link to .)
+[1.800s] Installing mission_node script to /workspace/install/strategy/bin
+[1.801s] 
+[1.802s] Installed /workspace/build/strategy
+[1.803s] running symlink_data
+[1.885s] Invoked command in '/workspace/build/strategy' returned '0': PYTHONPATH=/workspace/build/strategy/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/workspace/install/strategy/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /workspace/build/strategy/build --no-deps symlink_data

@@ -30,10 +30,12 @@ aruco_detector:
 # ------------------------------------------------------------
 camera:
   ros__parameters:
-    width: 1920
-    height: 1080
+    width: 1280
+    height: 720
     format: 'RGB888'
-
+    AfMode: 2        # 0=manual, 1=auto one-shot, 2=continuous
+    AfSpeed: 1       # 0=normal, 1=fast
+    LensPosition: 0.0  # 0.0 = infini (si AfMode=0)
 
 # ------------------------------------------------------------
 # NODE : box_detector  (package detection caisses)
@@ -111,6 +113,8 @@ mission:
     # Timing
     deposit_timeout: 5.0          # s — timeout dépôt caisse
     max_boxes_per_run: 1
+    intersection_turn_duration: 0.8   # s  — durée de la rotation
+    intersection_turn_speed:    0.6   # rad/s — vitesse angulaire
 
 # ------------------------------------------------------------
 # NODE : wifi_bridge  (package communication)

@@ -81,16 +81,37 @@ class StateMachineNode(Node):
         self.declare_parameter('mission.blind_advance_distance', 0.15)
         # Durée max du match (secondes)
         self.declare_parameter('mission.match_duration', 100.0)
+        # Durée de la rotation à l'intersection (secondes)
+        self.declare_parameter('mission.intersection_turn_duration', 0.8)
+        # Vitesse angulaire de la rotation à l'intersection (rad/s)
+        self.declare_parameter('mission.intersection_turn_speed', 0.6)
 
-        self.team               = self.get_parameter('robot.team').value
-        self.line_speed         = self.get_parameter('mission.line_follow_speed').value
-        self.approach_speed     = self.get_parameter('mission.approach_speed').value
-        self.grab_distance      = self.get_parameter('mission.grab_distance').value
-        self.grab_duration      = self.get_parameter('mission.grab_duration').value
-        self.release_duration   = self.get_parameter('mission.release_duration').value
-        self.deposit_timeout    = self.get_parameter('mission.deposit_timeout').value
-        self.blind_advance_dist = self.get_parameter('mission.blind_advance_distance').value
-        self.match_duration     = self.get_parameter('mission.match_duration').value
+        self.team                    = self.get_parameter('robot.team').value
+        self.line_speed              = self.get_parameter('mission.line_follow_speed').value
+        self.approach_speed          = self.get_parameter('mission.approach_speed').value
+        self.grab_distance           = self.get_parameter('mission.grab_distance').value
+        self.grab_duration           = self.get_parameter('mission.grab_duration').value
+        self.release_duration        = self.get_parameter('mission.release_duration').value
+        self.deposit_timeout         = self.get_parameter('mission.deposit_timeout').value
+        self.blind_advance_dist      = self.get_parameter('mission.blind_advance_distance').value
+        self.match_duration          = self.get_parameter('mission.match_duration').value
+        self.intersection_turn_dur   = self.get_parameter('mission.intersection_turn_duration').value
+        self.intersection_turn_speed = self.get_parameter('mission.intersection_turn_speed').value
+
+        # ------------------------------------------------------------------
+        #  Direction de virage à l'intersection selon l'équipe
+        #    blue   → tourne à gauche  → angular.z positif
+        #    yellow → tourne à droite  → angular.z négatif
+        # ------------------------------------------------------------------
+        if self.team == 'blue':
+            self._intersection_turn_sign = +1.0
+        else:
+            self._intersection_turn_sign = -1.0
+
+        self.get_logger().info(
+            f'  • Intersections : virage {"gauche" if self.team == "blue" else "droite"}'
+            f' (équipe {self.team})'
+        )
 
         # ------------------------------------------------------------------
         # État interne
@@ -104,6 +125,7 @@ class StateMachineNode(Node):
 
         # Données capteurs
         self.ir_mask            = 0          # bitmask IR (0 = pas de données)
+        self.ir_position        = -1         # -1 = ligne perdue, -2 = intersection
         self.box_to_flip        = None       # 'FLIP' ou 'KEEP'
         self.box_distance       = None       # distance capteur bas (m)
         self.obstacle_status    = 'OK'       # OK / WARNING / DANGER
@@ -113,21 +135,31 @@ class StateMachineNode(Node):
         self.gripper_status     = 'UNKNOWN'  # état pince
 
         # Pour BLIND_ADVANCE
-        self.blind_start_odom   = None       # snapshot odom au début avance aveugle
+        self.blind_start_odom    = None      # snapshot odom au début avance aveugle
         self.blind_distance_done = 0.0
 
         # Pour GRAB
-        self.grab_start_time    = None
-        self.grab_action        = None       # 'FLIP' ou 'KEEP'
+        self.grab_start_time = None
+        self.grab_action     = None          # 'FLIP' ou 'KEEP'
 
         # Pour PLACE
-        self.place_start_time   = None
+        self.place_start_time = None
+
+        # ------------------------------------------------------------------
+        #  Gestion intersection
+        #    _intersection_active  : True pendant la phase de rotation
+        #    _intersection_start_t : instant de début de rotation
+        # ------------------------------------------------------------------
+        self._intersection_active  = False
+        self._intersection_start_t = None
+        self._last_correction      = 0.0     # dernière correction angulaire connue
 
         # ------------------------------------------------------------------
         # Subscribers
         # ------------------------------------------------------------------
         self.create_subscription(Bool,    '/start_signal',                self._cb_start,    10)
         self.create_subscription(UInt8,   '/ir_line',                     self._cb_ir,       10)
+        self.create_subscription(Int32,   '/ir_position',                 self._cb_ir_pos,   10)
         self.create_subscription(String,  '/aruco/box_to_flip',           self._cb_aruco,    10)
         self.create_subscription(Float32, '/vision/nearest_box_distance', self._cb_distance, 10)
         self.create_subscription(String,  '/obstacle_alert',              self._cb_obstacle, 10)
@@ -137,10 +169,10 @@ class StateMachineNode(Node):
         # ------------------------------------------------------------------
         # Publishers
         # ------------------------------------------------------------------
-        self.cmd_pub      = self.create_publisher(Twist,  '/cmd_vel_raw',      10)
-        self.gripper_pub  = self.create_publisher(String, '/gripper/command',  10)
-        self.state_pub    = self.create_publisher(String, '/strategy/state',   10)
-        self.score_pub    = self.create_publisher(Int32,  '/strategy/score',   10)
+        self.cmd_pub     = self.create_publisher(Twist,  '/cmd_vel_raw',     10)
+        self.gripper_pub = self.create_publisher(String, '/gripper/command', 10)
+        self.state_pub   = self.create_publisher(String, '/strategy/state',  10)
+        self.score_pub   = self.create_publisher(Int32,  '/strategy/score',  10)
 
         # ------------------------------------------------------------------
         # Timer principal : boucle d'exécution à 20 Hz
@@ -164,6 +196,9 @@ class StateMachineNode(Node):
     def _cb_ir(self, msg: UInt8):
         self.ir_mask = msg.data
 
+    def _cb_ir_pos(self, msg: Int32):
+        self.ir_position = msg.data
+
     def _cb_aruco(self, msg: String):
         """Reçoit 'FLIP:JAUNE:0.92' ou 'KEEP:BLEU:0.87'"""
         parts = msg.data.split(':')
@@ -186,8 +221,8 @@ class StateMachineNode(Node):
             self.get_logger().info('✅ Obstacle dégagé')
 
     def _cb_odom(self, msg: Odometry):
-        self.odom_x     = msg.pose.pose.position.x
-        self.odom_y     = msg.pose.pose.position.y
+        self.odom_x = msg.pose.pose.position.x
+        self.odom_y = msg.pose.pose.position.y
         # Extraction yaw depuis quaternion
         q = msg.pose.pose.orientation
         siny = 2.0 * (q.w * q.z + q.x * q.y)
@@ -210,16 +245,16 @@ class StateMachineNode(Node):
                 self._stop_motors()
                 self._transition(State.STOP)
                 return
-                
-        # Dans _spin_once, avant le dispatch :
+
+        # Gestion obstacle : AVOID prend la main sauf en INIT/STOP/AVOID
         if (self.obstacle_status == 'DANGER'
                 and self.state not in (State.INIT, State.STOP, State.AVOID)):
             self.prev_state = self.state
             self._transition(State.AVOID)
 
-        elif (self.obstacle_status == 'OK'
-                and self.state == State.AVOID):
+        elif self.obstacle_status == 'OK' and self.state == State.AVOID:
             self._transition(self.prev_state)
+
         # Dispatch selon état courant
         {
             State.INIT:          self._run_init,
@@ -249,49 +284,86 @@ class StateMachineNode(Node):
     def _run_follow_line(self):
         """
         Suivi de ligne IR.
-        [STUB] — en attente des capteurs IR physiques.
-        Logique finale : lire self.ir_mask et corriger la trajectoire.
-
+        Logique :
+          - ir_position dans [0, 14000] → suivi normal avec correction P
+          - ir_position == -1 (LINE_LOST)         → maintenir dernière correction
+          - ir_position == -2 (LINE_INTERSECTION)  → virage selon équipe
+        
         Transition → APPROACH_BOX si ArUco détecté.
         """
         # --- Transition : ArUco détecté ---
         if self.box_to_flip is not None:
             self.get_logger().info(f'📦 ArUco détecté ({self.box_to_flip}) → APPROACH_BOX')
+            self._intersection_active = False   # annuler rotation en cours si besoin
             self._transition(State.APPROACH_BOX)
             return
 
-        # --- STUB suivi de ligne ---
-        # TODO : remplacer par la logique IR réelle quand les capteurs arrivent
-        # Principe : 
-        #   - ir_mask & 0b00100 = capteur centre → avancer droit
-        #   - décalage gauche → corriger angular.z positif
-        #   - décalage droite → corriger angular.z négatif
+        # --- Gestion intersection en cours ---
+        if self._intersection_active:
+            self._run_intersection_turn()
+            return
+
+        # --- Déclenchement d'une nouvelle intersection ---
+        if self.ir_position == -2:
+            self.get_logger().info(
+                f'✖️  Intersection détectée → virage '
+                f'{"gauche" if self._intersection_turn_sign > 0 else "droite"}'
+            )
+            self._intersection_active  = True
+            self._intersection_start_t = self.get_clock().now()
+            self._run_intersection_turn()
+            return
+
+        # --- Suivi de ligne normal ---
         cmd = Twist()
-        cmd.linear.x = self.line_speed  # avance tout droit (stub)
+        cmd.linear.x  = self.line_speed
         cmd.angular.z = self._compute_line_correction()
         self.cmd_pub.publish(cmd)
 
+    def _run_intersection_turn(self):
+        """
+        Exécute la rotation à l'intersection pendant intersection_turn_duration secondes,
+        puis reprend le suivi de ligne.
+
+        Sens de rotation :
+          blue   → angular.z > 0  (gauche)
+          yellow → angular.z < 0  (droite)
+        """
+        elapsed = (self.get_clock().now() - self._intersection_start_t).nanoseconds / 1e9
+
+        if elapsed < self.intersection_turn_dur:
+            cmd = Twist()
+            cmd.linear.x  = self.line_speed * 0.5   # avance réduite pendant le virage
+            cmd.angular.z = self._intersection_turn_sign * self.intersection_turn_speed
+            self.cmd_pub.publish(cmd)
+        else:
+            # Rotation terminée → reprendre le suivi normal
+            self.get_logger().info('↩️  Virage intersection terminé — suivi de ligne')
+            self._intersection_active  = False
+            self._intersection_start_t = None
+            # Publier un stop bref pour stabiliser avant de reprendre
+            self._stop_motors()
+
     def _compute_line_correction(self) -> float:
         """
-        Calcule la correction angulaire depuis le bitmask IR.
-        [STUB] — retourne 0.0 tant que les capteurs ne sont pas là.
+        Utilise la position centre de masse publiée par la Teensy IR.
+        Position : 0 (extrême gauche) à 14000 (extrême droite), -1 = perdu, -2 = intersection.
+        Centre = 7000. Erreur positive = robot décalé à droite → corriger à gauche.
 
-        Exemple de logique finale (5 capteurs, bit0=gauche, bit4=droite) :
-          positions = [-2, -1, 0, 1, 2]
-          erreur = somme pondérée des bits actifs / nb bits actifs
-          correction = Kp * erreur
+        Les valeurs -1 et -2 sont gérées en amont dans _run_follow_line ;
+        cette fonction ne reçoit que des valeurs dans [0, 14000].
         """
-        if self.ir_mask == 0:
-            return 0.0  # STUB : pas de correction
+        if self.ir_position < 0:
+            # Sécurité : ne devrait pas arriver ici, maintenir dernière correction
+            return self._last_correction
 
-        # TODO : implémenter PID ligne quand capteurs IR disponibles
-        Kp = 0.5
-        positions = [-2.0, -1.0, 0.0, 1.0, 2.0]
-        active = [(positions[i], 1) for i in range(5) if self.ir_mask & (1 << i)]
-        if not active:
-            return 0.0
-        error = sum(p for p, _ in active) / len(active)
-        return -Kp * error  # négatif car erreur droite = tourner à gauche
+        # Erreur normalisée : -1.0 (tout à gauche) → +1.0 (tout à droite)
+        error = (self.ir_position - 7000) / 7000.0
+
+        Kp = 1.2   # à calibrer — commencer à 0.6 et monter progressivement
+        correction = -Kp * error
+        self._last_correction = correction
+        return correction
 
     def _run_approach_box(self):
         """
@@ -336,7 +408,7 @@ class StateMachineNode(Node):
         if self.blind_start_odom is not None:
             dx = self.odom_x - self.blind_start_odom[0]
             dy = self.odom_y - self.blind_start_odom[1]
-            dist_done = math.sqrt(dx*dx + dy*dy)
+            dist_done = math.sqrt(dx * dx + dy * dy)
 
             if dist_done >= self.blind_advance_dist:
                 self.get_logger().info(
@@ -355,7 +427,7 @@ class StateMachineNode(Node):
         """
         Fermer la pince, éventuellement flipper la caisse.
         [STUB pince] — en attente du code camarade.
-        
+
         Transitions :
           - pince fermée + action FLIP → commande flip
           - timeout → transition PLACE (sécurité)
@@ -366,7 +438,6 @@ class StateMachineNode(Node):
         if self.grab_start_time is None:
             self.grab_start_time = now
             self.grab_action = self.box_to_flip  # mémoriser l'action
-            # Commande pince
             grip_msg = String()
             grip_msg.data = 'CLOSE'
             self.gripper_pub.publish(grip_msg)
@@ -388,7 +459,7 @@ class StateMachineNode(Node):
 
         # Fin GRAB → PLACE
         self.get_logger().info('✅ GRAB terminé → PLACE')
-        self.boxes_grabbed += 1
+        self.boxes_grabbed  += 1
         self.grab_start_time = None
         self._transition(State.PLACE)
 
@@ -414,7 +485,7 @@ class StateMachineNode(Node):
         if not deposit_zone_detected and elapsed < self.deposit_timeout:
             # Continuer le suivi de ligne vers la zone de dépôt
             cmd = Twist()
-            cmd.linear.x = self.line_speed
+            cmd.linear.x  = self.line_speed
             cmd.angular.z = self._compute_line_correction()
             self.cmd_pub.publish(cmd)
             return
@@ -436,8 +507,8 @@ class StateMachineNode(Node):
 
         # Reset pour prochain cycle
         self.place_start_time = None
-        self.box_to_flip = None
-        self.box_distance = None
+        self.box_to_flip      = None
+        self.box_distance     = None
 
         # Reprendre le suivi de ligne
         self._transition(State.FOLLOW_LINE)
@@ -446,7 +517,7 @@ class StateMachineNode(Node):
         """
         Détecte la zone de dépôt.
         [STUB] — à implémenter avec le pattern IR de la zone de dépôt.
-        
+
         Exemple : tous les capteurs IR actifs = bande blanche de dépôt.
         """
         # TODO : définir le pattern IR de la zone de dépôt avec les capteurs réels
@@ -456,7 +527,7 @@ class StateMachineNode(Node):
     def _run_avoid(self):
         """
         Obstacle détecté : robot stoppé.
-        Le retour à prev_state est géré dans _cb_obstacle quand status == 'OK'.
+        Le retour à prev_state est géré dans _spin_once quand status revient à 'OK'.
         """
         self._stop_motors()
 

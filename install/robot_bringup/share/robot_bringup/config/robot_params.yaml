@@ -1,1 +1,133 @@
-/workspace/build/robot_bringup/config/robot_params.yaml
+# ============================================================
+#  Configuration centrale du robot - Eurobot 2025
+#  Format ROS2 : chaque section = nom du node + ros__parameters
+#
+#  ⚠️  MODIFIER team: 'blue' ou 'yellow' LE JOUR DU MATCH
+# ============================================================
+
+# ------------------------------------------------------------
+# NODE : aruco_detector  (package vision)
+# ------------------------------------------------------------
+aruco_detector:
+  ros__parameters:
+    # Équipe — À CHANGER LE JOUR DU MATCH
+    team: 'blue'
+
+    # Caméra
+    camera_topic: '/camera/image_raw'
+    publish_annotated_image: true
+
+    # Détection ArUco
+    confidence_threshold: 0.85
+
+    # Positionnement caisses
+    box_lost_advance_distance: 0.15   # m — avance après perte du tag
+    box_detection_distance: 0.10      # m — caisse détectée = robot au-dessus
+    approach_speed: 0.05              # m/s
+
+# ------------------------------------------------------------
+# NODE : camera  (package camera_ros)
+# ------------------------------------------------------------
+camera:
+  ros__parameters:
+    width: 1280
+    height: 720
+    format: 'RGB888'
+    AfMode: 2        # 0=manual, 1=auto one-shot, 2=continuous
+    AfSpeed: 1       # 0=normal, 1=fast
+    LensPosition: 0.0  # 0.0 = infini (si AfMode=0)
+
+# ------------------------------------------------------------
+# NODE : box_detector  (package detection caisses)
+# ------------------------------------------------------------
+box_detector:
+  ros__parameters:
+    vision.calibration_file: '/workspace/src/vision/config/calibration.npz'
+    vision.marker_size_m: 0.05
+    vision.box_size_m: 0.10
+    vision.publish_annotated_image: true
+    
+# ------------------------------------------------------------
+# NODE : obstacle_avoidance  (package navigation)
+# ------------------------------------------------------------
+obstacle_avoidance:
+  ros__parameters:
+    # Équipe
+    team: 'blue'
+
+    # Distances évitement
+    min_obstacle_distance: 0.30   # m — déclenchement évitement
+    critical_distance: 0.20      # m — arrêt d'urgence
+    slow_start_distance: 0.40
+    approach_speed_threshold: 0.02
+
+    # Angles de surveillance
+    front_angle_range: 45.0       # degrés — cône avant
+    side_angle_range: 90.0        # degrés — côtés
+
+    # Vitesses
+    max_linear_speed: 0.30        # m/s
+    max_angular_speed: 1.00       # rad/s
+
+    # Activation
+    enable_avoidance: true
+
+    robot.team: 'blue'
+    navigation.critical_distance: 0.20
+    navigation.slow_start_distance: 0.40
+    navigation.front_angle_range: 45.0
+    navigation.side_angle_range: 90.0
+    navigation.max_linear_speed: 0.30
+    navigation.max_angular_speed: 1.00
+    navigation.enable_avoidance: true
+    navigation.approach_speed_threshold: 0.02
+
+# ------------------------------------------------------------
+# NODE : rplidar  (package rplidar_ros)
+# ------------------------------------------------------------
+rplidar:
+  ros__parameters:
+    serial_port: '/dev/ttyUSB0'
+    serial_baudrate: 115200
+    frame_id: 'laser_frame'
+    angle_compensate: true
+    scan_mode: 'Standard'
+
+# ------------------------------------------------------------
+# NODE : mission  (package strategy)
+# ------------------------------------------------------------
+mission:
+  ros__parameters:
+    # Équipe
+    team: 'blue'
+
+    # Vitesses mission
+    line_follow_speed: 0.20       # m/s
+    approach_speed: 0.05          # m/s
+
+    # Pince
+    grab_distance: 0.08           # m — déclenchement fermeture pince
+    grab_duration: 1.5            # s
+    release_duration: 1.0         # s
+
+    # Timing
+    deposit_timeout: 5.0          # s — timeout dépôt caisse
+    max_boxes_per_run: 1
+    intersection_turn_duration: 0.8   # s  — durée de la rotation
+    intersection_turn_speed:    0.6   # rad/s — vitesse angulaire
+
+# ------------------------------------------------------------
+# NODE : wifi_bridge  (package communication)
+# ------------------------------------------------------------
+wifi_bridge:
+  ros__parameters:
+    # Équipe
+    team: 'blue'
+
+    # PAMI
+    pami_ip: '192.168.1.50'
+    pami_port: 9090
+    heartbeat_interval: 1.0       # s
+    connection_timeout: 3.0       # s
+    # blue  → pami tourne à droite
+    # yellow → pami tourne à gauche
