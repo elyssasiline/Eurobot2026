@@ -1,4 +1,4 @@
-# Robot Principal — Eurobot 2025
+# Robot Principal | Eurobot 2025
 
 Robot autonome conçu pour la compétition **Eurobot 2025**, basé sur ROS2 Humble, un Raspberry Pi 5 et deux Teensy 4.1 via micro-ROS.
 
