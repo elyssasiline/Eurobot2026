@@ -8,7 +8,6 @@ setup.py
 ../../build/robot_bringup/robot_bringup.egg-info/top_level.txt
 ../../build/robot_bringup/robot_bringup.egg-info/zip-safe
 config/robot_params.yaml
-launch/raspberry.launch.py
 launch/robot.launch.py
 resource/robot_bringup
 robot_bringup/__init__.py

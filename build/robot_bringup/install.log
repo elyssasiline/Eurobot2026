@@ -3,7 +3,6 @@
 /workspace/install/robot_bringup/share/ament_index/resource_index/packages/robot_bringup
 /workspace/install/robot_bringup/share/robot_bringup/package.xml
 /workspace/install/robot_bringup/share/robot_bringup/launch/robot.launch.py
-/workspace/install/robot_bringup/share/robot_bringup/launch/raspberry.launch.py
 /workspace/install/robot_bringup/share/robot_bringup/config/robot_params.yaml
 /workspace/install/robot_bringup/lib/python3.10/site-packages/robot_bringup-0.1.0-py3.10.egg-info/dependency_links.txt
 /workspace/install/robot_bringup/lib/python3.10/site-packages/robot_bringup-0.1.0-py3.10.egg-info/zip-safe

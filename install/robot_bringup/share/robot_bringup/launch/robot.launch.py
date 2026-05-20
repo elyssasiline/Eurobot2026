@@ -136,6 +136,6 @@ def generate_launch_description():
         micro_ros_agent_ir_gripper,  # Teensy IR+pince  — ACM1 ⚠️
         navigation_launch,           # RPLidar + obstacle avoidance
         vision_launch,               # Caméra + ArUco
-        strategy_node,               # State machine (délai 3s)
+        # strategy_node,               # State machine (délai 3s), commenté pour démo
         # communication_node,          # WiFi PAMIs
     ])
